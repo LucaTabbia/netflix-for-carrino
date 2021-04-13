@@ -1,0 +1,9 @@
+<div class="container" style="width: 100%; margin-top: 30px;">
+  <div class="row">
+    <div class="card col-3" *ngFor="let film of films" style="margin-bottom: 10px">
+      <img src="{{film.cover_url}}" class="card-img-top" alt="" style="height: 65%;">
+      <h3>{{film.title}}</h3>
+      <p>{{film.description}}</p>
+    </div>
+  </div>
+</div>

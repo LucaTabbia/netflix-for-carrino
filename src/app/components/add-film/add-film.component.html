@@ -1,0 +1,46 @@
+<div class="container" style="margin-top: 30px;">
+    <form method="POST">
+      <label for="id" class="form-label">ID: </label><br>
+      <input type="number" class="form-control col-4" name="id" [(ngModel)]="film.id"><br><br>
+      <label for="title" class="form-label">Title:</label><br>
+      <input type="text" class="form-control col-4" name="title" [(ngModel)]="film.title"><br><br>
+      <label for="director" class="form-label">Director:</label><br>
+      <input type="text" class="form-control col-4" name="director" [(ngModel)]="film.director"><br><br>
+      <label for="duration" class="form-label">Duration:</label><br>
+      <input type="time" class="form-control col-4" name="duration" [(ngModel)]="film.duration"><br><br>
+      <label for="release_year" class="form-label">Release year:</label><br>
+      <input type="number" class="form-control col-4" name="release_year" [(ngModel)]="film.release_year"><br><br>
+      <label for="cover_url" class="form-label">Cover url:</label><br>
+      <input type="text" class="form-control col-4" name="cover_url" [(ngModel)]="film.cover_url"><br><br>
+      <label for="tags" class="form-label">Tags:</label><br>
+      <input type="text" class="form-control col-4" name="tags" [(ngModel)]="film.tags"><br><br>
+      <label for="actors" class="form-label">Actors:</label><br>
+      <div id="actorsForm" class="row align-items-md-center d-flex flex-column">
+        <label for="id" class="form-label">id:</label><br>
+        <input type="number" class="form-control col-4" name="id" [(ngModel)]="actor.id"><br><br>
+        <label for="firstname" class="form-label">Firstname:</label><br>
+        <input type="text" class="form-control col-4" name="firstname" [(ngModel)]="actor.firstname"><br><br>
+        <label for="lastname" class="form-label">Lastname:</label><br>
+        <input type="text" class="form-control col-4" name="lastname" [(ngModel)]="actor.lastname"><br><br>
+        <label for="birthdate" class="form-label">Birthdate:</label><br>
+        <input type="date" class="form-control col-4" name="birthdate" [(ngModel)]="actor.birthdate"><br><br>
+        <button class="btn btn-dark" name="add-actor" (click)="addActor()">Add actor</button>
+      </div>
+      <label for="genres" class="form-label">Genres:</label><br>
+      <div id="genresForm" class="row align-items-md-center d-flex flex-column">
+        <label for="id" class="form-label">id:</label><br>
+        <input type="number" class="form-control col-4" name="id" [(ngModel)]="genre.id"><br><br>
+        <label for="name" class="form-label">Name:</label><br>
+        <input type="text" class="form-control col-4" name="name" [(ngModel)]="genre.name"><br><br>
+        <button class="btn btn-dark" name="add-actor" (click)="addGenre()">Add genre</button>
+      </div>
+      <label for="votes" class="form-label">Votes:</label><br>
+      <div id="votesForm" class="row align-items-md-center d-flex flex-column">
+          <label for="vote" class="form-label">Vote:</label><br>
+          <input type="number" class="form-control col-4" name="vote" [(ngModel)]="vote"><br><br>
+          <button class="btn btn-dark" name="add-actor" (click)="addVote()">Add vote</button>
+      </div>
+      <button type="submit" class="btn btn-dark" name="add-film" (click)="add()">Add Film</button>
+    </form>
+  </div>
+
