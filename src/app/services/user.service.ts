@@ -10,10 +10,19 @@ import { User } from '../models/user';
 })
 export class UserService {
   loginUrl= 'https://netflix.cristiancarrino.com/user/login.php';
+  updateUrl= 'https://netflix.cristiancarrino.com/user/update.php';
+  addFilmUrl= 'https://netflix.cristiancarrino.com/user/favorite-films.php';
+  addGenreUrl= 'https://netflix.cristiancarrino.com/user/favorite-genres.php';
+  addActorUrl= 'https://netflix.cristiancarrino.com/user/favorite-actors.php';
+  
   loggedUser: User|null = null;
 
   httpOption= {
     headers:new HttpHeaders({'Content-Type': 'application/json'})
+  }
+  httpOptionUpdate= {
+    headers:new HttpHeaders({'Content-Type': 'application/json'}),
+    Authorization: this.loggedUser?.token
   }
 
   constructor(
@@ -39,8 +48,52 @@ export class UserService {
    this.loggedUser= this.localStorage.get('loggedUser');
    return this.loggedUser;
   }
+  editLoggedUser(user: User): Observable<User|null>{
+    return this.http.post<User|null>(this.loginUrl, user, this.httpOptionUpdate)
+    .pipe(tap(response=> {
+      this.loggedUser = response;
+    }),
+    catchError(error=>{
+      this.loggedUser = null;
+      this.logOut();
+      return of(null)
+    }));
+  }
+  addFavoriteFilm(id: number): Observable<User|null>{
+    return this.http.post<User|null>(this.addFilmUrl, id, this.httpOptionUpdate)
+    .pipe(tap(response=> {
+      this.loggedUser = response;
+    }),
+    catchError(error=>{
+      this.loggedUser = null;
+      this.logOut();
+      return of(null)
+    })); 
+  }
+  addFavoriteGenre(id: number): Observable<User|null>{
+    return this.http.post<User|null>(this.addGenreUrl, id, this.httpOptionUpdate)
+    .pipe(tap(response=> {
+      this.loggedUser = response;
+    }),
+    catchError(error=>{
+      this.loggedUser = null;
+      this.logOut();
+      return of(null)
+    })); 
+  }
+  addFavoriteActor(id: number): Observable<User|null>{
+    return this.http.post<User|null>(this.addActorUrl, id, this.httpOptionUpdate)
+    .pipe(tap(response=> {
+      this.loggedUser = response;
+    }),
+    catchError(error=>{
+      this.loggedUser = null;
+      this.logOut();
+      return of(null)
+    })); 
+  }
   logOut(){
-  this.localStorage.remove('loggedUser');
-  this.loggedUser= null;
+    this.localStorage.remove('loggedUser');
+    this.loggedUser= null;
   }
 }

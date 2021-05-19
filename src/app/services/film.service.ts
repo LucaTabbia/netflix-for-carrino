@@ -4,14 +4,16 @@ import { tap, catchError } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import { Film } from '../models/film';
 import { UserService } from './user.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FilmService {
   filmsUrl= 'https://netflix.cristiancarrino.com/film/read.php';
-  createUrl= 'https://netflix.cristiancarrino.com/film/create.php'
+  createUrl= 'https://netflix.cristiancarrino.com/film/create.php';
+  updateUrl= 'https://netflix.cristiancarrino.com/film/update.php';
+  removeUrl= 'https://netflix.cristiancarrino.com/film/delete.php';
+
   httpOption= {
     headers:new HttpHeaders({'Content-Type': 'application/json'})
   }
@@ -21,6 +23,8 @@ export class FilmService {
     'Authorization': this.userService.loggedUser ? this.userService.loggedUser.token : ''
   })}
   allFilms: Film[]= []
+  bestFilms: Film[]= []
+  lastFilms: Film[]= []
 
   constructor(
     private http: HttpClient,
@@ -40,5 +44,19 @@ export class FilmService {
   }
   addFilm(film:Film): Observable<Film>{
     return this.http.post<Film>(this.createUrl, film, this.httpOptions);
+  }
+  voteFilm(id: number, vote: number): void{
+    this.getFilms()
+    for(let film of this.allFilms){
+      if(id== film.id){
+        film.votes.push(vote)
+      }
+    }
+  }
+  editFilm(film: Film): Observable<Film>{
+    return this.http.post<Film>(this.updateUrl, film, this.httpOptions);
+  }
+  removeFilm(id: number): Observable<Film>{
+    return this.http.post<Film>(this.removeUrl, id, this.httpOptions);
   }
 }

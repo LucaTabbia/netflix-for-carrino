@@ -1,0 +1,10 @@
+<div class="container" style="width: 100%; margin-top: 30px;">
+    <div class="row">
+      <div class="card col-3" *ngFor="let actor of actors" style="margin-bottom: 10px">
+        <img src="{{actor.photo_url}}" class="card-img-top" alt="" style="height: 65%;">
+        <h3>{{actor.firstname}}{{actor.lastname}}</h3>
+        <h5>{{actor.birthdate}}</h5>
+        <p>{{actor.films}}</p>
+      </div>
+    </div>
+</div>

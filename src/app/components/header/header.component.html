@@ -5,18 +5,38 @@
 	</button>
 	<div class="d-flex collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-		<li class="nav-item">
-			<a class="nav-link active" aria-current="page" href="#">Home</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" routerLink="film-list">Films</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" routerLink="add-film">Add film</a>
-      </li>
-    <li class="nav-item">
-      <button class="btn btn-outline-light" (click)= 'logOut()'>Log Out</button>
-    </li>
+			<li class="nav-item">
+				<a class="nav-link active" aria-current="page" routerLink="dashboard">Home</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" routerLink="films/film-list">Films</a>
+    		</li>
+			<li class="nav-item">
+				<a class="nav-link" routerLink="genres/genre-list">Genres</a>
+    		</li>
+			<li class="nav-item">
+				<a class="nav-link" routerLink="actors/actor-list">Actors</a>
+    		</li>
+			<li class="nav-item">
+				<a class="nav-link" routerLink="actors/add-actor">add-actor</a>
+    		</li>
+			<li class="nav-item">
+				<a class="nav-link" routerLink="genres/add-genre">add-genre</a>
+    		</li>
+			<li class="nav-item">
+				<a class="nav-link" routerLink="films/add-film">add-film</a>
+    		</li>
+    		<li class="nav-item dropdown">
+        		<a class="nav-link dropdown-toggle" id="navbarAddDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Add</a>
+				<ul class="dropdown-menu" aria-labelledby="navbarAddDropdown">
+					<li><a class="dropdown-item" routerLink="actors/add-actor">Actor</a></li>
+					<li><a class="dropdown-item" routerLink="genres/add-genre">Genre</a></li>
+					<li><a class="dropdown-item" routerLink="films/add-film">Film</a></li>
+				</ul>
+      		</li>
+    		<li class="nav-item">
+     	 		<button class="btn btn-outline-light" (click)= 'logOut()'>Log Out</button>
+    		</li>
 		</ul>
 	</div>
 </nav>

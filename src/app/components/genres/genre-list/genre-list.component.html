@@ -1,0 +1,11 @@
+<div class="container" style="width: 100%; margin-top: 30px;">
+    <div class="row">
+      <div class="card col-3" *ngFor="let genre of genres" style="margin-bottom: 10px">
+        <img src="{{genre.image_url}}" class="card-img-top" alt="" style="height: 65%;">
+        <h3>{{genre.name}}</h3>
+        <p>{{genre.films}}</p>
+        <button>edit</button>
+        <button>remove</button>
+      </div>
+    </div>
+</div>

@@ -6,6 +6,7 @@ export interface Film {
   id: number;
   title: string;
   description: string;
+  plot: string;
   director: string;
   duration: Time;
   vote?: number;
@@ -13,6 +14,7 @@ export interface Film {
   cover_url?: string;
   tags: string;
   created_by: number;
+  created_at: string;
   actors: Actor[];
   genres: Genre[];
   votes: number[];

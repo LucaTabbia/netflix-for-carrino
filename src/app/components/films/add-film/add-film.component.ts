@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FilmService } from 'src/app/services/film.service';
-import { Film } from 'src/app/models/film';
 import { Router } from '@angular/router';
-import { Actor } from 'src/app/models/actor';
-import { Genre } from 'src/app/models/genre';
+import { Film } from 'src/app/models/film';
+import { ActorService } from 'src/app/services/actor.service';
+import { FilmService } from 'src/app/services/film.service';
+import { GenreService } from 'src/app/services/genre.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -17,6 +17,7 @@ export class AddFilmComponent implements OnInit {
   id: 0,
   title: '',
   description: '',
+  plot: '',
   director: '',
   duration: {hours: 0, minutes: 0},
   vote: 0,
@@ -24,26 +25,18 @@ export class AddFilmComponent implements OnInit {
   cover_url: '',
   tags: '',
   created_by: 0,
+  created_at: new Date().toString(),
   actors: [],
   genres: [],
   votes: [],
   }
-  actor: Actor={
-    id: 0,
-    firstname: 'string',
-    lastname: 'string',
-    birthdate: new Date(),
-    created_by: 0,
-  }
-  genre: Genre={
-    id: 0,
-    name: '',
-    created_by: 0
-  }
-  vote: number= 0;
+  actorId: number= 0;
+  genreId: number= 0;
 
   constructor(
     private filmService: FilmService,
+    private actorService: ActorService,
+    private genreService: GenreService,
     private router: Router,
     private userService: UserService
   ) { }
@@ -52,6 +45,7 @@ export class AddFilmComponent implements OnInit {
   }
 
   add(){
+    this.film.created_at= new Date().toString();
     if(this.userService.loggedUser!= null){
     this.film.created_by= this.userService.loggedUser.id
     }
@@ -61,6 +55,7 @@ export class AddFilmComponent implements OnInit {
         id: 0,
         title: '',
         description: '',
+        plot: '',
         director: '',
         duration: {hours: 0, minutes: 0},
         vote: 0,
@@ -68,39 +63,39 @@ export class AddFilmComponent implements OnInit {
         cover_url: '',
         tags: '',
         created_by: 0,
+        created_at: new Date().toString(),
         actors: [],
         genres: [],
         votes: []
       };
-      this.router.navigate(['/film-list'])
+      this.router.navigate(['films/film-list'])
     });
   }
   addActor(){
-    if(this.userService.loggedUser!= null){
-      this.actor.created_by= this.userService.loggedUser.id
+    this.actorService.getActors().subscribe(actors => {
+      if(actors.length==0){
+        alert('there are no actors');
+      }else{
+        for(let actor of actors){
+          if(actor.id== this.actorId){
+            this.film.actors?.push(actor);
+          }
+        }
       }
-    this.film.actors.push(this.actor);
-    this.actor={
-      id: 0,
-      firstname: 'string',
-      lastname: 'string',
-      birthdate: new Date(),
-      created_by: 0,
-    }
+    });
   }
   addGenre(){
-    if(this.userService.loggedUser!= null){
-      this.genre.created_by= this.userService.loggedUser.id
-    }
-    this.film.genres.push(this.genre);
-    this.genre={
-      id: 0,
-      name: '',
-      created_by: 0
-    }
-  }
-  addVote(){
-    this.film.votes.push(this.vote);
-    this.vote= 0;
+    this.genreService.getGenres().subscribe(genres => {
+      if(genres.length==0){
+        alert('there are no genres');
+      }else{
+        for(let genre of genres){
+          if(genre.id== this.genreId){
+            this.film.genres?.push(genre);
+          }
+        }
+      }
+    });
   }
 }
+  
