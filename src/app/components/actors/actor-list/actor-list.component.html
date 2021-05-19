@@ -5,6 +5,7 @@
         <h3>{{actor.firstname}}{{actor.lastname}}</h3>
         <h5>{{actor.birthdate}}</h5>
         <p>{{actor.films}}</p>
+        <button (click)="addToFavorites(actor.id)">Add actor to favorites</button>
         <button [routerLink]="['/actors/edit-actor/', actor.id]">Edit Actor</button>
       </div>
     </div>

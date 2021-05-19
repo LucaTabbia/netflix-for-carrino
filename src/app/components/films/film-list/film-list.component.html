@@ -10,6 +10,7 @@
           <p>{{film.description}}</p>
           <p>{{film.vote}}</p>
           <ngb-rating (rateChange)="newVote($event, film)"></ngb-rating>
+          <button (click)="addToFavorites(film.id)">Add film to favorites</button>
           <button [routerLink]="['/films/edit-film/', film.id]">Edit film</button>
         </div>
       </div>

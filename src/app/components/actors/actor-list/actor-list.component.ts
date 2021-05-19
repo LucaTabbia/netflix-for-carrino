@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActorService } from 'src/app/services/actor.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-actor-list',
@@ -11,6 +12,7 @@ export class ActorListComponent implements OnInit {
   actors: any[]= [];
   constructor(
     private actorService: ActorService,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -26,5 +28,9 @@ export class ActorListComponent implements OnInit {
         this.actors = actors;
       }
     });
+  }
+  addToFavorites(id: number){
+    console.log(id)
+    this.userService.addFavoriteFilm(id)
   }
 }

@@ -4,6 +4,7 @@
         <img src="{{genre.image_url}}" class="card-img-top" alt="" style="height: 65%;">
         <h3>{{genre.name}}</h3>
         <p>{{genre.films}}</p>
+        <button (click)="addToFavorites(genre.id)">Add genre to favorites</button>
         <button [routerLink]="['/genres/edit-genre/', genre.id]">Edit genre</button>
       </div>
     </div>

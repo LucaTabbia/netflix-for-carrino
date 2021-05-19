@@ -10,9 +10,8 @@ import { User } from '../models/user';
 })
 export class UserService {
   loginUrl= 'https://netflix.cristiancarrino.com/user/login.php';
-  updateUrl= 'https://netflix.cristiancarrino.com/user/update.php';
-  editUrl= 'https://netflix.cristiancarrino.com/user/edit.php';
-  addFilmUrl= 'https://netflix.cristiancarrino.com/user/edit.php';
+  editUrl= 'http://netflix.cristiancarrino.com/user/edit.php';
+  addFilmUrl= 'https://netflix.cristiancarrino.com/user/favorite-films.php';
   addGenreUrl= 'https://netflix.cristiancarrino.com/user/favorite-genres.php';
   addActorUrl= 'https://netflix.cristiancarrino.com/user/favorite-actors.php';
   
@@ -56,9 +55,11 @@ export class UserService {
     return this.http.post<any>(this.addFilmUrl,{id: id}, this.httpOptionUpdate)
     .pipe(tap(response=> {
       this.loggedUser = response;
+      console.log(this.loggedUser?.favorite_films)
     }),
     catchError(error=>{
       this.loggedUser = null;
+      console.log(error)
       this.logOut();
       return of(false)
     })); 

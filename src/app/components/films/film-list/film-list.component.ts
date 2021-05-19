@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Film } from 'src/app/models/film';
 import { FilmService } from 'src/app/services/film.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-film-list',
@@ -14,8 +14,8 @@ export class FilmListComponent implements OnInit {
   filmsForSearch: any[]= [];
 
   constructor(
+    private userService: UserService,
     private filmService: FilmService,
-    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -56,6 +56,10 @@ export class FilmListComponent implements OnInit {
         this.filmsForSearch= films;
       }
     });
+  }
+  addToFavorites(id: number){
+    console.log(id)
+    this.userService.addFavoriteFilm(id)
   }
 
 }

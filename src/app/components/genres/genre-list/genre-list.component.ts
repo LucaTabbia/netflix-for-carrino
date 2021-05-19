@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GenreService } from 'src/app/services/genre.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-genre-list',
@@ -10,6 +11,7 @@ export class GenreListComponent implements OnInit {
 
   genres: any[]= [];
   constructor(
+    private userService: UserService,
     private genreService: GenreService,
   ) { }
 
@@ -25,5 +27,9 @@ export class GenreListComponent implements OnInit {
         this.genres = genres;
       }
     });
+  }
+  addToFavorites(id: number){
+    console.log(id)
+    this.userService.addFavoriteFilm(id)
   }
 }
