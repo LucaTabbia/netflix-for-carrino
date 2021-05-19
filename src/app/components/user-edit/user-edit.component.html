@@ -1,1 +1,19 @@
-<p>user-edit works!</p>
+<div class="container">
+    <form method="POST">
+      <label for="username" class="form-label">Username: </label><br>
+      <input type="text" class="form-control col-4" name="username" [(ngModel)]="user.username"><br><br>
+      <label for="firstname" class="form-label">firstname: </label><br>
+      <input type="text" class="form-control col-4" name="firstname" [(ngModel)]="user.firstname"><br><br>
+      <label for="lastname" class="form-label">lastname: </label><br>
+      <input type="text" class="form-control col-4" name="lastname" [(ngModel)]="user.lastname"><br><br>
+      <label for="photo_url" class="form-label">Photo url: </label><br>
+      <input type="text" class="form-control col-4" name="photo_url" [(ngModel)]="user.photo_url"><br><br>
+      <label for="birthdate" class="form-label">birthdate: </label><br>
+      <input type="date" class="form-control col-4" name="birthdate" [(ngModel)]="user.birthdate"><br><br>
+      <label for="password" class="form-label">Password:</label><br>
+      <input type="password" class="form-control col-4" name="password" [(ngModel)]="user.password"><br><br>
+      <label for="passwordCheck" class="form-label">Repete password:</label><br>
+      <input type="password" class="form-control col-4" name="passwordCheck" [(ngModel)]="passwordCheck"><br><br>
+      <button type="button" class="btn btn-dark" name="edit" (click)="edit()">Edit User</button>
+    </form>
+  </div>

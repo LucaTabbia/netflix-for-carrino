@@ -22,9 +22,7 @@ export class FilmService {
     'Content-Type': 'application/json',
     'Authorization': this.userService.loggedUser ? this.userService.loggedUser.token : ''
   })}
-  allFilms: Film[]= []
-  bestFilms: Film[]= []
-  lastFilms: Film[]= []
+  allFilms: Film[]= [];
 
   constructor(
     private http: HttpClient,
@@ -35,7 +33,6 @@ export class FilmService {
     return this.http.get<Film[]>(this.filmsUrl, this.httpOption
       ).pipe(tap(response=> {
         this.allFilms = response;
-        console.log(response)
       }),
       catchError(error=>{
         this.allFilms = [];
@@ -50,13 +47,14 @@ export class FilmService {
     for(let film of this.allFilms){
       if(id== film.id){
         film.votes.push(vote)
+        this.editFilm(film);
       }
     }
   }
-  editFilm(film: Film): Observable<Film>{
-    return this.http.post<Film>(this.updateUrl, film, this.httpOptions);
-  }
-  removeFilm(id: number): Observable<Film>{
-    return this.http.post<Film>(this.removeUrl, id, this.httpOptions);
+  editFilm(film: Film): Observable<any>{
+    return this.http.post<any>(this.updateUrl, film, this.httpOptions)
+	}
+  removeFilm(id: number): Observable<any>{
+    return this.http.post<any>(this.removeUrl,{ id: id }, this.httpOptions)
   }
 }

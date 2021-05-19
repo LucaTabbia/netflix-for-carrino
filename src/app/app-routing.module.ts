@@ -11,6 +11,7 @@ import { EditActorComponent } from './components/actors/edit-actor/edit-actor.co
 import { GenreListComponent } from './components/genres/genre-list/genre-list.component';
 import { AddGenreComponent } from './components/genres/add-genre/add-genre.component';
 import { EditGenreComponent } from './components/genres/edit-genre/edit-genre.component';
+import { UserEditComponent } from './components/user-edit/user-edit.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -24,7 +25,8 @@ const routes: Routes = [
   {path: 'actors/edit-actor/:id', component: EditActorComponent},
   {path: 'genres/genre-list', component: GenreListComponent},
   {path: 'genres/add-genre', component: AddGenreComponent},
-  {path: 'genres/edit-genre/:id', component: EditGenreComponent}
+  {path: 'genres/edit-genre/:id', component: EditGenreComponent},
+  {path: 'user-edit', component: UserEditComponent}
 
 ];
 

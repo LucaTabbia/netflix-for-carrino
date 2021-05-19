@@ -1,5 +1,6 @@
+
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Film } from 'src/app/models/film';
 import { ActorService } from 'src/app/services/actor.service';
 import { FilmService } from 'src/app/services/film.service';
@@ -12,7 +13,6 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./edit-film.component.scss']
 })
 export class EditFilmComponent implements OnInit {
-
   film: Film= {
     id: 0,
     title: '',
@@ -32,44 +32,57 @@ export class EditFilmComponent implements OnInit {
     }
     actorId: number= 0;
     genreId: number= 0;
+    userId: number=0;
   
     constructor(
       private filmService: FilmService,
       private actorService: ActorService,
       private genreService: GenreService,
       private router: Router,
-      private userService: UserService
+      private userService: UserService,
+      private actRoute: ActivatedRoute,
     ) { }
   
     ngOnInit(): void {
+      this.getFilmToEdit();
     }
-  
-    add(){
-      this.film.created_at= new Date().toString();
-      if(this.userService.loggedUser!= null){
-      this.film.created_by= this.userService.loggedUser.id
+    
+    getFilmToEdit(){
+      if(this.userService.loggedUser==null){
+        alert('You must be logged!')
+        this.router.navigate(['/login'])
+      }else{
+        this.userId= this.userService.loggedUser.id;
+        this.filmService.getFilms().subscribe(films => {
+          if(films.length==0){
+            alert('there are no films');
+          }else{
+            for(let film of films){
+              if(film.id== this.actRoute.snapshot.params.id && film.created_by == this.userId){
+                this.film= film;
+              }
+              if(film.id== this.actRoute.snapshot.params.id && film.created_by != this.userId){
+                alert("You haven't the permits to edit this film")
+                this.router.navigate(['films/film-list'])
+              }
+            }
+          }
+        });
       }
-      this.filmService.addFilm(this.film).subscribe(response=>{
-        console.log(response);
-        this.film={
-          id: 0,
-          title: '',
-          description: '',
-          plot: '',
-          director: '',
-          duration: {hours: 0, minutes: 0},
-          vote: 0,
-          release_year: 0,
-          cover_url: '',
-          tags: '',
-          created_by: 0,
-          created_at: new Date().toString(),
-          actors: [],
-          genres: [],
-          votes: []
-        };
-        this.router.navigate(['films/film-list'])
-      });
+    }
+    remove(){
+      this.filmService.removeFilm(this.film.id).subscribe(response => {
+				if (response.success) {
+					this.router.navigate(['films/film-list']);
+				}
+			})
+    }
+    edit(){
+      this.filmService.editFilm(this.film).subscribe(response => {
+				if (response.success) {
+					this.router.navigate(['films/film-list']);
+				}
+			})
     }
     addActor(){
       this.actorService.getActors().subscribe(actors => {

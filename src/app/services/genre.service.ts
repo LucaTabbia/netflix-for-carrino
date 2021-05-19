@@ -43,11 +43,11 @@ export class GenreService {
   addGenre(genre:Genre): Observable<Genre>{
     return this.http.post<Genre>(this.createUrl, genre, this.httpOptions);
   }
-  editGenre(genre: Genre): Observable<Genre>{
-    return this.http.post<Genre>(this.updateUrl, genre, this.httpOptions);
+  editGenre(genre: Genre): Observable<any>{
+    return this.http.post<any>(this.updateUrl, genre, this.httpOptions);
   }
-  removeGenre(id: number): Observable<Genre>{
-    return this.http.post<Genre>(this.removeUrl, id, this.httpOptions);
+  removeGenre(id: number): Observable<any>{
+    return this.http.post<any>(this.removeUrl, {id: id}, this.httpOptions);
   }
   selectGenre(id: number): void{
     this.getGenres()

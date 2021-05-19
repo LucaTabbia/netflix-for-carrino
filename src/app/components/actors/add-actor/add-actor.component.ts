@@ -31,8 +31,15 @@ export class AddActorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.checkUser();
   }
 
+  checkUser(){
+    if(this.userService.loggedUser==null){
+      alert('You must be logged!')
+      this.router.navigate(['/login'])
+    }
+  }
   add(){
     if(this.userService.loggedUser!= null){
     this.actor.created_by= this.userService.loggedUser.id

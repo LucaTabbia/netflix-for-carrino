@@ -9,6 +9,7 @@ export interface User {
   firstname: string;
   lastname: string;
   birthdate: Date|null;
+  photo_url?: string;
   favorite_films: Film[]|null;
   favorite_actors: Actor[]|null;
   favorite_genres: Genre[]|null;

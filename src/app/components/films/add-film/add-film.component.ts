@@ -42,8 +42,15 @@ export class AddFilmComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.checkUser();
   }
 
+  checkUser(){
+    if(this.userService.loggedUser==null){
+      alert('You must be logged!')
+      this.router.navigate(['/login'])
+    }
+  }
   add(){
     this.film.created_at= new Date().toString();
     if(this.userService.loggedUser!= null){

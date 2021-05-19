@@ -36,7 +36,6 @@ export class ActorService {
     return this.http.get<Actor[]>(this.actorsUrl, this.httpOption
       ).pipe(tap(response=> {
         this.allActors = response;
-        console.log(response)
       }),
       catchError(error=>{
         this.allActors = [];
@@ -46,11 +45,11 @@ export class ActorService {
   addActor(actor:Actor): Observable<Actor>{
     return this.http.post<Actor>(this.createUrl, actor, this.httpOptions);
   }
-  editActor(actor:Actor): Observable<Actor>{
-    return this.http.post<Actor>(this.updateUrl, actor, this.httpOptions);
+  editActor(actor:Actor): Observable<any>{
+    return this.http.post<any>(this.updateUrl, actor, this.httpOptions);
   }
-  removeActor(id:number): Observable<Actor>{
-    return this.http.post<Actor>(this.removeUrl, id, this.httpOptions);
+  removeActor(id:number): Observable<any>{
+    return this.http.post<any>(this.removeUrl, id, this.httpOptions);
   }
   selectActor(id: number): void{
     this.getActors()
