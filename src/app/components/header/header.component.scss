@@ -1,0 +1,20 @@
+.user-img{
+    width: 50px;
+    height: 50px;
+    border: 2px solid black;
+    background-color: darkgrey;;
+    background-size: cover;
+}
+.user-info{
+    display: flex;
+    position: absolute;
+    right: 15px;
+    align-items: center;
+    bottom: 10px;
+}
+.header-navbar{
+    height: 70px;
+}
+.log-button{
+    padding-left: 10px;
+}

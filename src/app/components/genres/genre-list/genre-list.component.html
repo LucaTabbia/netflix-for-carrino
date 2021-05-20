@@ -1,11 +1,14 @@
-<div class="container" style="width: 100%; margin-top: 30px;">
+<div class="container-personal" style="width: 100%; margin-top: 30px;">
+  <button class="add-button" [routerLink]="['/genres/add-genre']">Add new genre</button>
     <div class="row">
-      <div class="card col-3" *ngFor="let genre of genres" style="margin-bottom: 10px">
+      <div class="card col-3 genre-container" *ngFor="let genre of genres" style="margin-bottom: 10px">
         <img src="{{genre.image_url}}" class="card-img-top" alt="" style="height: 65%;">
         <h3>{{genre.name}}</h3>
         <p>{{genre.films}}</p>
-        <button (click)="addToFavorites(genre.id)">Add genre to favorites</button>
-        <button [routerLink]="['/genres/edit-genre/', genre.id]">Edit genre</button>
+        <div class="genre-buttons">
+          <button (click)="addToFavorites(genre.id)">Add genre to favorites</button>
+          <button [routerLink]="['/genres/edit-genre/', genre.id]">Edit genre</button>
+        </div>
       </div>
     </div>
 </div>

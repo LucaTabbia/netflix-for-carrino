@@ -1,0 +1,39 @@
+*{
+    margin: 0 auto;
+}
+.container-personal{
+    margin-top: 60px;
+}
+.search-form{
+    padding-bottom: 40px;
+    display: flex;
+    justify-content: center;
+}
+.film-container{
+    margin-bottom: 20px;
+}
+.card-img-top{
+    margin-top: 15px;
+    border: 1px solid black;
+}
+.rating{
+    display: flex;
+}
+.film-buttons{
+    display: flex;
+    position: absolute;
+    bottom: 15px;
+    justify-content: space-around;
+}
+.search-bar{
+    width:50%
+}
+.search-bar, .search-button{
+    margin: 0;
+}
+.add-button{
+    width: 10%;
+    position: relative;
+    left: 45%;
+    margin-bottom: 10px;
+}

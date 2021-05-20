@@ -10,6 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 export class HeaderComponent implements OnInit {
 
   userId= 0;
+  userImg= "https://pbs.twimg.com/profile_images/740272510420258817/sd2e6kJy_400x400.jpg";
   constructor(
     private router: Router,
     private userService: UserService
@@ -24,6 +25,9 @@ export class HeaderComponent implements OnInit {
     }
     else{
       this.userId= this.userService.loggedUser.id;
+      if(this.userService.loggedUser.photo_url!= undefined){
+        this.userImg= this.userService.loggedUser.photo_url;
+      }
     }
   }
   logOut(){

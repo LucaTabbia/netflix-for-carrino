@@ -1,17 +1,22 @@
-<div class="container" style="width: 100%; margin-top: 30px;">
-    <form class="d-flex">
-      <input type="search" name="search" class="form-control me-2" placeholder="Search" aria-label="Search" [(ngModel)]="searchTag">
-      <button class="btn btn-outline-success" type="submit" (click)="search()">Search</button>
+<div class="container-personal">
+    <button class="add-button" [routerLink]="['/films/add-film']">Add new film</button>
+    <form class="search-form">
+      <input type="search" name="search" class="form-control me-2 search-bar" placeholder="Search" aria-label="Search" [(ngModel)]="searchTag">
+      <button class="btn btn-outline-success search-button" type="submit" (click)="search()">Search</button>
     </form>
       <div class="row">
-        <div class="card col-3" *ngFor="let film of films" style="margin-bottom: 10px">
+        <div class="card col-3 film-container" *ngFor="let film of films">
           <img src="{{film.cover_url}}" class="card-img-top" alt="" style="height: 65%;">
           <h4>{{film.title}}</h4>
           <p>{{film.description}}</p>
-          <p>{{film.vote}}</p>
-          <ngb-rating (rateChange)="newVote($event, film)"></ngb-rating>
-          <button (click)="addToFavorites(film.id)">Add film to favorites</button>
-          <button [routerLink]="['/films/edit-film/', film.id]">Edit film</button>
+          <div class="rating">
+            <p>{{film.vote}}</p>
+            <ngb-rating (rateChange)="newVote($event, film)"></ngb-rating>
+          </div>
+          <div class="film-buttons">
+            <button (click)="addToFavorites(film.id)">Add film to favorites</button>
+            <button [routerLink]="['/films/edit-film/', film.id]">Edit film</button>
+          </div>
         </div>
       </div>
   </div>
