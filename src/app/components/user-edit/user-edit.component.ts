@@ -52,12 +52,8 @@ export class UserEditComponent implements OnInit {
         alert("check that your passwords are the same");
         return;
       }
-      this.userService.editLoggedUser(this.user).subscribe(response => {
-				if (response.success) {
-					console.log("success")
-				}
-        this.userService.logOut()
-        this.router.navigate(['/login'])
-			})
+      this.userService.editLoggedUser(this.user).subscribe()
+      this.userService.logOut()
+      this.router.navigate(['/login'])
     }
   }

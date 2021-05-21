@@ -58,7 +58,6 @@ export class AddActorComponent implements OnInit {
   }
   //add the actor to the list
   add(){
-    console.log(this.actor.films)
     if(this.userService.loggedUser!= null){
     this.actor.created_by= this.userService.loggedUser.id
     }
@@ -105,7 +104,6 @@ export class AddActorComponent implements OnInit {
       for(let filmOfActor of this.filmsToAdd){
         if(filmOfList.id== filmOfActor.id && filmOfList.created_by== this.userService.loggedUser?.id){
           filmOfList.actors.push(this.actor)
-          console.log(filmOfList)
           this.filmService.editFilm(filmOfList).subscribe()
         }
       }

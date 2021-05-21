@@ -30,7 +30,6 @@ export class GenreService {
     return this.http.get<Genre[]>(this.genresUrl, this.httpOption
       ).pipe(tap(response=> {
         this.allGenres = response;
-        console.log(response)
       }),
       catchError(error=>{
         this.allGenres = [];
