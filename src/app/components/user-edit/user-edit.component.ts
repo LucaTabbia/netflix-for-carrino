@@ -33,7 +33,8 @@ export class UserEditComponent implements OnInit {
     ngOnInit(): void {
       this.getUserToEdit();
     }
-  
+
+    //get the user that is going to be edited
     getUserToEdit(){
       if(this.userService.loggedUser==null){
         alert('You must be logged!')
@@ -44,6 +45,8 @@ export class UserEditComponent implements OnInit {
       }
     }
 
+
+    //edit the user
     edit(){
       if(this.user.password!=this.passwordCheck){
         alert("check that your passwords are the same");
@@ -51,8 +54,10 @@ export class UserEditComponent implements OnInit {
       }
       this.userService.editLoggedUser(this.user).subscribe(response => {
 				if (response.success) {
-					this.router.navigate(['/login']);
+					console.log("success")
 				}
+        this.userService.logOut()
+        this.router.navigate(['/login'])
 			})
     }
   }

@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  
+  //get the films that have the highest rating
   getBestFilms(): void{
     this.filmService.getFilms().subscribe(films => {
       if(films.length==0){
@@ -87,7 +87,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-
+// get the films that were inserted in the list most recently
   getLastFilms(): void{
     this.filmService.getFilms().subscribe(films => {
       if(films.length==0){

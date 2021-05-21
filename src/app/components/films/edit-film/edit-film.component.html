@@ -19,18 +19,15 @@
       <label for="vote" class="form-label">Vote:</label><br>
       <input type="number" class="form-control col-4" name="vote" [(ngModel)]="film.vote"><br><br>
       <label for="actors" class="form-label">Actors:</label><br>
-      <div id="actorsForm" class="row align-items-md-center d-flex flex-column">
-        <label for="id" class="form-label">ID:</label><br>
-        <input type="number" class="form-control col-4" name="id" [(ngModel)]="actorId"><br><br>
-        <button class="btn btn-dark" name="add-actor" (click)="addActor()">Add actor</button>
+      <div id="actorsForm" class="row buttons-to-select">
+        <button *ngFor="let actor of actors"class="btn button-to-select" [ngClass]="actor.selected?'btn-dark':'btn-light'" name="add-actor" (click)="addActor(actor.id)">{{actor.firstname}} {{actor.lastname}}</button>
       </div>
       <label for="genres" class="form-label">Genres:</label><br>
-      <div id="genresForm" class="row align-items-md-center d-flex flex-column">
-        <label for="id" class="form-label">ID:</label><br>
-        <input type="number" class="form-control col-4" name="id" [(ngModel)]="genreId"><br><br>
-        <button class="btn btn-dark" name="add-genre" (click)="addGenre()">Add genre</button>
+      <div id="genresForm" class="row buttons-to-select">
+        <button *ngFor="let genre of genres" class="btn button-to-select" [ngClass]="genre.selected?'btn-dark':'btn-light'" name="add-genre" (click)="addGenre(genre.id)">{{genre.name}}</button>
       </div>
       <button class="btn btn-dark" name="edit-film" (click)="edit()">Edit Film</button>
       <button class="btn btn-dark" name="remove-film" (click)="remove()">Remove Film</button>
+      <button class="btn btn-dark" [routerLink]="['/films/film-list/']">Cancel</button>
     </form>
   </div>

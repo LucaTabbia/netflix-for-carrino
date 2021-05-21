@@ -18,7 +18,8 @@ export class EditGenreComponent implements OnInit {
     image_url: '',
     created_by: 0
   }
-  filmId: number= 0;
+  filmsToAdd: any[]= [];
+  films: any[]= [];
   userId: number=0;
   
     constructor(
@@ -31,8 +32,37 @@ export class EditGenreComponent implements OnInit {
   
     ngOnInit(): void {
       this.getGenreToEdit();
+      this.getFilms()
     }
   
+
+    //get the film list
+    getFilms(){
+      this.filmService.getFilms().subscribe(films => {
+        if(films.length==0){
+          alert('there are no films');
+        }else{
+          this.films= films
+          for(let film of this.films){
+            film= Object.assign(film, {
+              selected: false
+            })
+          }
+          for(let filmOfList of this.films){
+            for(let genre of filmOfList.genres){
+              if(this.genre.id== genre.id){
+                filmOfList.selected= true
+                this.filmsToAdd.push(filmOfList)
+                break;
+              }
+            }
+          }
+        }
+      });
+    }
+
+
+    //get the genre that is going to be edited
     getGenreToEdit(){
       if(this.userService.loggedUser==null){
         alert('You must be logged!')
@@ -56,6 +86,9 @@ export class EditGenreComponent implements OnInit {
         });
       }
     }
+
+
+    //remove the genre from the list
     remove(){
       this.genreService.removeGenre(this.genre.id).subscribe(response => {
 				if (response.success) {
@@ -63,24 +96,62 @@ export class EditGenreComponent implements OnInit {
 				}
 			})
     }
+
+
+    //edit the genre
     edit(){
+      for(let film of this.filmsToAdd){
+        delete(film.selected)
+      }
+      //commented because the genre db don't contain any films column
+//      this.genre.films= this.filmsToAdd;
+      this.editFilm()
       this.genreService.editGenre(this.genre).subscribe(response => {
 				if (response.success) {
 					this.router.navigate(['films/film-list']);
 				}
 			})
     }
-    addFilm(){
-      this.filmService.getFilms().subscribe(films => {
-        if(films.length==0){
-          alert('there are no films');
-        }else{
-          for(let film of films){
-            if(film.id== this.filmId){
-              this.genre.films?.push(film);
+
+
+    //add or remove the film from the genre film list, based on click
+    addFilm(id: number){
+      for(let filmToAdd of this.filmsToAdd){
+        if(filmToAdd.id== id){
+          filmToAdd.selected= false;
+          this.filmsToAdd= this.filmsToAdd.filter(film=> film.id!= filmToAdd.id);
+          return;
+        }
+      }
+      for(let film of this.films){
+        if(film.id== id){
+          film.selected= true;
+          this.filmsToAdd.push(film)
+          return;
+        }
+      }
+    }
+
+
+    //edit the films contained inside the genre film list, if created by the user
+    editFilm(){
+      let inserted= false;
+      for(let filmOfList of this.films){
+        if(this.genre.films!= undefined){
+          for(let film of this.genre.films){
+            if(filmOfList.id= film.id){
+              for(let genre of filmOfList.genres){
+                if(genre.id== this.genre.id){
+                  inserted= true;
+                }
+              }
+              if(inserted==false && filmOfList.created_by == this.userId){
+                filmOfList.genres.push(this.genre)
+                this.filmService.editFilm(filmOfList).subscribe()
+              }
             }
           }
         }
-      });
+      }
     }
   }

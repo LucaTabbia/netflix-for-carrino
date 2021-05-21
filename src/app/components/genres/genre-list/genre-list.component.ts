@@ -10,6 +10,8 @@ import { UserService } from 'src/app/services/user.service';
 export class GenreListComponent implements OnInit {
 
   genres: any[]= [];
+  userId: number= this.userService.loggedUser ? this.userService.loggedUser.id : 0;
+
   constructor(
     private userService: UserService,
     private genreService: GenreService,
@@ -19,6 +21,8 @@ export class GenreListComponent implements OnInit {
     this.getGenres();
   }
 
+
+  //get the list of genres
   getGenres(): void{
     this.genreService.getGenres().subscribe(genres => {
       if(genres.length==0){
@@ -28,8 +32,17 @@ export class GenreListComponent implements OnInit {
       }
     });
   }
+
+
+  //add the genre to the user favorites list
   addToFavorites(id: number){
-    console.log(id)
-    this.userService.addFavoriteFilm(id)
+    if(this.userService.loggedUser?.favorite_genres!= undefined){
+      let favoriteGenreList= this.userService.loggedUser?.favorite_genres.toString()+ ","+id;
+      this.userService.addFavoriteGenre(favoriteGenreList).subscribe()
+    }
+    else{
+      let favoriteGenreList= id.toString();
+      this.userService.addFavoriteGenre(favoriteGenreList).subscribe()
+    }
   }
 }

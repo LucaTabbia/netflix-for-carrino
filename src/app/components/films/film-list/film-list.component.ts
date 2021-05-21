@@ -12,6 +12,7 @@ export class FilmListComponent implements OnInit {
   films: any[]= [];
   searchTag: string= '';
   filmsForSearch: any[]= [];
+  userId: number= this.userService.loggedUser ? this.userService.loggedUser.id : 0
 
   constructor(
     private userService: UserService,
@@ -22,6 +23,8 @@ export class FilmListComponent implements OnInit {
     this.getFilms();
   }
 
+
+  //search inside the film list, based on the values that the user types
   search(): void{
     this.films= this.filmsForSearch
     if(this.searchTag== "" || this.searchTag== " "){
@@ -43,10 +46,16 @@ export class FilmListComponent implements OnInit {
     }
     this.films= searchedFilms
   }
+
+
+  //add a vote to the film
   newVote(value: any, film: Film){
     film.votes.push(value);
     this.filmService.editFilm(film)
   }
+
+
+  //get the list of films
   getFilms(): void{
     this.filmService.getFilms().subscribe(films => {
       if(films.length==0){
@@ -57,9 +66,19 @@ export class FilmListComponent implements OnInit {
       }
     });
   }
+
+
+  //add the film to the user favorites list
   addToFavorites(id: number){
-    console.log(id)
-    this.userService.addFavoriteFilm(id)
+    if(this.userService.loggedUser?.favorite_films!= undefined){
+      let favoriteFilmList= this.userService.loggedUser?.favorite_films.toString()+ ","+id;
+      this.userService.addFavoriteFilm(favoriteFilmList).subscribe()
+    }
+    else{
+      let favoriteFilmList= id.toString();
+      this.userService.addFavoriteFilm(favoriteFilmList).subscribe()
+    }
+     
   }
 
 }

@@ -1,5 +1,5 @@
 <div class="container-personal">
-    <button class="add-button" [routerLink]="['/films/add-film']">Add new film</button>
+    <button class="add-button btn btn-dark" [routerLink]="['/films/add-film']">Add new film</button>
     <form class="search-form">
       <input type="search" name="search" class="form-control me-2 search-bar" placeholder="Search" aria-label="Search" [(ngModel)]="searchTag">
       <button class="btn btn-outline-success search-button" type="submit" (click)="search()">Search</button>
@@ -14,8 +14,8 @@
             <ngb-rating (rateChange)="newVote($event, film)"></ngb-rating>
           </div>
           <div class="film-buttons">
-            <button (click)="addToFavorites(film.id)">Add film to favorites</button>
-            <button [routerLink]="['/films/edit-film/', film.id]">Edit film</button>
+            <button class="btn btn-dark" (click)="addToFavorites(film.id)">Add film to favorites</button>
+            <button *ngIf="film.created_by== userId"class="btn btn-dark" [routerLink]="['/films/edit-film/', film.id]">Edit film</button>
           </div>
         </div>
       </div>

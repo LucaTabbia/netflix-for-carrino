@@ -1,5 +1,5 @@
 <div class="container-personal" style="width: 100%; margin-top: 30px;">
-  <button class="add-button" [routerLink]="['/actors/add-actor']">Add new actor</button>
+  <button class="add-button btn btn-dark" [routerLink]="['/actors/add-actor']">Add new actor</button>
     <div class="row">
       <div class="card col-3 actor-container" *ngFor="let actor of actors" style="margin-bottom: 10px">
         <img src="{{actor.photo_url}}" class="card-img-top" alt="" style="height: 65%;">
@@ -7,8 +7,8 @@
         <h5>{{actor.birthdate}}</h5>
         <p>{{actor.films}}</p>
         <div class="actor-buttons">
-          <button (click)="addToFavorites(actor.id)">Add actor to favorites</button>
-          <button [routerLink]="['/actors/edit-actor/', actor.id]">Edit Actor</button>
+          <button class="btn btn-dark" (click)="addToFavorites(actor.id)">Add actor to favorites</button>
+          <button *ngIf="actor.created_by== userId" class="btn btn-dark" [routerLink]="['/actors/edit-actor/', actor.id]">Edit Actor</button>
         </div>
       </div>
     </div>

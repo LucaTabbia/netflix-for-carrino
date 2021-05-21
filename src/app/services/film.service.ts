@@ -17,11 +17,7 @@ export class FilmService {
   httpOption= {
     headers:new HttpHeaders({'Content-Type': 'application/json'})
   }
-  httpOptions={
-    headers:new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': this.userService.loggedUser ? this.userService.loggedUser.token : ''
-  })}
+
   allFilms: Film[]= [];
 
   constructor(
@@ -29,6 +25,8 @@ export class FilmService {
     private userService: UserService
   ) { }
 
+
+  //get the film list
   getFilms(): Observable<Film[]>{
     return this.http.get<Film[]>(this.filmsUrl, this.httpOption
       ).pipe(tap(response=> {
@@ -39,22 +37,37 @@ export class FilmService {
         return of([])
       }));
   }
+
+
+  //add a film
   addFilm(film:Film): Observable<Film>{
-    return this.http.post<Film>(this.createUrl, film, this.httpOptions);
+    let httpOptions={
+      headers:new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.userService.loggedUser ? this.userService.loggedUser.token : ''
+    })}
+    return this.http.post<Film>(this.createUrl, film, httpOptions);
   }
-  voteFilm(id: number, vote: number): void{
-    this.getFilms()
-    for(let film of this.allFilms){
-      if(id== film.id){
-        film.votes.push(vote)
-        this.editFilm(film);
-      }
-    }
-  }
+
+
+  //edit the film
   editFilm(film: Film): Observable<any>{
-    return this.http.post<any>(this.updateUrl, film, this.httpOptions)
+    let httpOptions={
+      headers:new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.userService.loggedUser ? this.userService.loggedUser.token : ''
+    })}
+    return this.http.post<any>(this.updateUrl, film, httpOptions)
 	}
+
+
+  //remove the film
   removeFilm(id: number): Observable<any>{
-    return this.http.post<any>(this.removeUrl,{ id: id }, this.httpOptions)
+    let httpOptions={
+      headers:new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.userService.loggedUser ? this.userService.loggedUser.token : ''
+    })}
+    return this.http.post<any>(this.removeUrl,{ id: id }, httpOptions)
   }
 }

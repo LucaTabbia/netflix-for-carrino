@@ -1,6 +1,3 @@
-import { Film } from './film';
-import { Actor } from './actor';
-import { Genre } from './genre';
 
 export interface User {
   id: number;
@@ -10,9 +7,9 @@ export interface User {
   lastname: string;
   birthdate: Date|null;
   photo_url?: string;
-  favorite_films: Film[]|null;
-  favorite_actors: Actor[]|null;
-  favorite_genres: Genre[]|null;
+  favorite_films: number[];
+  favorite_actors: number[];
+  favorite_genres: number[];
   token: string;
   last_login: Date;
 }

@@ -13,16 +13,11 @@ export class ActorService {
   actorsUrl= 'https://netflix.cristiancarrino.com/actor/read.php';
   createUrl= 'https://netflix.cristiancarrino.com/actor/create.php';
   updateUrl= 'https://netflix.cristiancarrino.com/actor/update.php';
-  removeUrl= 'https://netflix.cristiancarrino.com/actor/remove.php';
+  removeUrl= 'https://netflix.cristiancarrino.com/actor/delete.php';
 
   httpOption= {
     headers:new HttpHeaders({'Content-Type': 'application/json'})
   }
-  httpOptions={
-    headers:new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': this.userService.loggedUser ? this.userService.loggedUser.token : ''
-  })}
 
   allActors: Actor[]= []
 
@@ -32,6 +27,8 @@ export class ActorService {
     private userService: UserService
   ) { }
 
+
+  //get the list of actors
   getActors(): Observable<Actor[]>{
     return this.http.get<Actor[]>(this.actorsUrl, this.httpOption
       ).pipe(tap(response=> {
@@ -42,21 +39,37 @@ export class ActorService {
         return of([])
       }));
   }
+
+
+  //add an actor to the list
   addActor(actor:Actor): Observable<Actor>{
-    return this.http.post<Actor>(this.createUrl, actor, this.httpOptions);
+    let httpOptions={
+      headers:new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.userService.loggedUser ? this.userService.loggedUser.token : ''
+    })}
+    return this.http.post<Actor>(this.createUrl, actor, httpOptions);
   }
+
+
+  //edit an actor
   editActor(actor:Actor): Observable<any>{
-    return this.http.post<any>(this.updateUrl, actor, this.httpOptions);
+    let httpOptions={
+      headers:new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.userService.loggedUser ? this.userService.loggedUser.token : ''
+    })}
+    return this.http.post<any>(this.updateUrl, actor, httpOptions);
   }
+
+
+  //remove the actor
   removeActor(id:number): Observable<any>{
-    return this.http.post<any>(this.removeUrl, id, this.httpOptions);
-  }
-  selectActor(id: number): void{
-    this.getActors()
-    for(let actor of this.allActors){
-      if(id== actor.id){
-        actor.selected= true;
-      }
-    }
+    let httpOptions={
+      headers:new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.userService.loggedUser ? this.userService.loggedUser.token : ''
+    })}
+    return this.http.post<any>(this.removeUrl, {id: id}, httpOptions);
   }
 }

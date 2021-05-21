@@ -18,7 +18,9 @@ export class AddGenreComponent implements OnInit {
     image_url: '',
     created_by: 0
   }
-  filmId: number= 0;
+  filmsToAdd: any[]= [];
+  films: any[]= [];
+
   constructor(
     private filmService: FilmService,
     private genreService: GenreService,
@@ -28,18 +30,47 @@ export class AddGenreComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkUser();
+    this.getFilms();
   }
 
+
+  //get the list of films
+  getFilms(){
+    this.filmService.getFilms().subscribe(films => {
+      if(films.length==0){
+        alert('there are no films');
+      }else{
+        for(let film of films){
+          film= Object.assign(film, {
+            selected: false
+          })
+        }
+        this.films= films
+      }
+    });
+  }
+
+
+  //check if the user is logged in
   checkUser(){
     if(this.userService.loggedUser==null){
       alert('You must be logged!')
       this.router.navigate(['/login'])
     }
   }
+
+
+  //add the genre to the list
   add(){
     if(this.userService.loggedUser!= null){
     this.genre.created_by= this.userService.loggedUser.id
     }
+    for(let film of this.filmsToAdd){
+      delete(film.selected)
+      //commented because the genre db don't contain any films column
+//      this.genre.films?.push(film)
+    }
+    this.editFilm()
     this.genreService.addGenre(this.genre).subscribe(response=>{
       console.log(response);
       this.genre={
@@ -51,17 +82,36 @@ export class AddGenreComponent implements OnInit {
       this.router.navigate(['genres/genre-list'])
     });
   }
-  addFilm(){
-    this.filmService.getFilms().subscribe(films => {
-      if(films.length==0){
-        alert('there are no films');
-      }else{
-        for(let film of films){
-          if(film.id== this.filmId){
-            this.genre.films?.push(film);
-          }
+
+
+  //add the film to the genre film list or remove it from it, based on click
+  addFilm(id: number){
+    for(let filmToAdd of this.filmsToAdd){
+      if(filmToAdd.id== id){
+        filmToAdd.selected= false;
+        this.filmsToAdd= this.filmsToAdd.filter(film=> film.id!= filmToAdd.id);
+        return;
+      }
+    }
+    for(let film of this.films){
+      if(film.id== id){
+        film.selected= true;
+        this.filmsToAdd.push(film)
+        return;
+      }
+    }
+  }
+
+
+  //edit the films inserted in the genre film list, if the creator is the user
+  editFilm(){
+    for(let filmOfList of this.films){
+      for(let filmOfGenre of this.filmsToAdd){
+        if(filmOfList.id== filmOfGenre.id && filmOfList.created_by== this.userService.loggedUser?.id){
+          filmOfList.genres.push(this.genre)
+          this.filmService.editFilm(filmOfList).subscribe()
         }
       }
-    });
+    }
   }
 }

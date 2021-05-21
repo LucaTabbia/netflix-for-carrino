@@ -16,11 +16,6 @@ export class GenreService {
   httpOption= {
     headers:new HttpHeaders({'Content-Type': 'application/json'})
   }
-  httpOptions={
-    headers:new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': this.userService.loggedUser ? this.userService.loggedUser.token : ''
-  })}
 
   allGenres: Genre[]= []
 
@@ -29,6 +24,8 @@ export class GenreService {
     private userService: UserService
   ) { }
 
+
+  //get the genre list
   getGenres(): Observable<Genre[]>{
     return this.http.get<Genre[]>(this.genresUrl, this.httpOption
       ).pipe(tap(response=> {
@@ -40,21 +37,37 @@ export class GenreService {
         return of([])
       }));
   }
+
+
+  //add a genre
   addGenre(genre:Genre): Observable<Genre>{
-    return this.http.post<Genre>(this.createUrl, genre, this.httpOptions);
+    let httpOptions={
+      headers:new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.userService.loggedUser ? this.userService.loggedUser.token : ''
+    })}
+    return this.http.post<Genre>(this.createUrl, genre, httpOptions);
   }
+
+
+  //edit a genre
   editGenre(genre: Genre): Observable<any>{
-    return this.http.post<any>(this.updateUrl, genre, this.httpOptions);
+    let httpOptions={
+      headers:new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.userService.loggedUser ? this.userService.loggedUser.token : ''
+    })}
+    return this.http.post<any>(this.updateUrl, genre, httpOptions);
   }
+
+
+  //remove a genre
   removeGenre(id: number): Observable<any>{
-    return this.http.post<any>(this.removeUrl, {id: id}, this.httpOptions);
-  }
-  selectGenre(id: number): void{
-    this.getGenres()
-    for(let genre of this.allGenres){
-      if(id== genre.id){
-        genre.selected= true;
-      }
-    }
+    let httpOptions={
+      headers:new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.userService.loggedUser ? this.userService.loggedUser.token : ''
+    })}
+    return this.http.post<any>(this.removeUrl, {id: id}, httpOptions);
   }
 }

@@ -21,7 +21,8 @@ export class EditActorComponent implements OnInit {
     films: [],
     created_by: 0,
   }
-    filmId: number= 0;
+    filmsToAdd: any[]= [];
+    films: any[]= [];
     userId: number=0;
   
     constructor(
@@ -34,8 +35,34 @@ export class EditActorComponent implements OnInit {
   
     ngOnInit(): void {
       this.getActorToEdit();
+      this.getFilms()
     }
   
+  //get the list of films and assign them a selected value based on the actor film list
+    getFilms(){
+      this.filmService.getFilms().subscribe(films => {
+        if(films.length==0){
+          alert('there are no films');
+        }else{
+          this.films= films
+          for(let film of this.films){
+            film= Object.assign(film, {
+              selected: false
+            })
+          }
+          for(let filmOfList of this.films){
+            for(let actor of filmOfList.actors){
+              if(this.actor.id== actor.id){
+                filmOfList.selected= true
+                this.filmsToAdd.push(filmOfList)
+                break;
+              }
+            }
+          }
+        }
+      });
+    }
+    //get the actor that needs to be edited
     getActorToEdit(){
       if(this.userService.loggedUser==null){
         alert('You must be logged!')
@@ -59,31 +86,64 @@ export class EditActorComponent implements OnInit {
         });
       }
     }
+    //delete the actor from the list
     remove(){
       this.actorService.removeActor(this.actor.id).subscribe(response => {
 				if (response.success) {
-					this.router.navigate(['films/film-list']);
+					this.router.navigate(['actors/actor-list']);
 				}
 			})
     }
+    //edit the actor
     edit(){
+      for(let film of this.filmsToAdd){
+        delete(film.selected)
+      }
+      //commented because the actor db don't contains any films col
+//      this.actor.films= this.filmsToAdd;
+      this.editFilm()
       this.actorService.editActor(this.actor).subscribe(response => {
 				if (response.success) {
-					this.router.navigate(['films/film-list']);
+					this.router.navigate(['actors/actor-list']);
 				}
 			})
     }
-    addFilm(){
-      this.filmService.getFilms().subscribe(films => {
-        if(films.length==0){
-          alert('there are no films');
-        }else{
-          for(let film of films){
-            if(film.id== this.filmId){
-              this.actor.films?.push(film);
+    //add the film to the actor film list based on click
+    addFilm(id: number){
+      for(let filmToAdd of this.filmsToAdd){
+        if(filmToAdd.id== id){
+          filmToAdd.selected= false;
+          this.filmsToAdd= this.filmsToAdd.filter(film=> film.id!= filmToAdd.id);
+          return;
+        }
+      }
+      for(let film of this.films){
+        if(film.id== id){
+          film.selected= true;
+          this.filmsToAdd.push(film)
+          return;
+        }
+      }
+    }
+    //edit the films in the actor film list if they're made by the same user that is editing
+    editFilm(){
+      let inserted= false;
+      for(let filmOfList of this.films){
+        if(this.actor.films!=undefined){
+          for(let film of this.actor.films){
+            if(filmOfList.id= film.id){
+              for(let actor of filmOfList.actors){
+                if(actor.id== this.actor.id){
+                  inserted= true;
+                }
+              }
+              if(inserted==false && filmOfList.created_by == this.userId){
+                filmOfList.actors.push(this.actor)
+                this.filmService.editFilm(filmOfList).subscribe()
+              }
             }
           }
         }
-      });
+      }
     }
   }

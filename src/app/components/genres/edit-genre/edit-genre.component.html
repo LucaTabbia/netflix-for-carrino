@@ -5,12 +5,11 @@
       <label for="image_url" class="form-label">Image url:</label><br>
       <input type="text" class="form-control col-4" name="image_url" [(ngModel)]="genre.image_url"><br><br>
       <label for="films" class="form-label">Films:</label><br>
-      <div id="filmsForm" class="row align-items-md-center d-flex flex-column">
-        <label for="id" class="form-label">ID:</label><br>
-        <input type="number" class="form-control col-4" name="id" [(ngModel)]="filmId"><br><br>
-        <button class="btn btn-dark" name="add-film" (click)="addFilm()">Add film</button>
+      <div id="filmsForm" class="row buttons-to-select">
+        <button *ngFor="let film of films"class="btn button-to-select" [ngClass]="film.selected?'btn-dark':'btn-light'" name="add-film" (click)="addFilm(film.id)">{{film.title}}</button>
       </div>
       <button type="submit" class="btn btn-dark" name="edit-genre" (click)="edit()">Edit Genre</button>
       <button type="submit" class="btn btn-dark" name="remove-genre" (click)="remove()">Remove Genre</button>
+      <button class="btn btn-dark" [routerLink]="['/genres/genre-list/']">Cancel</button>
     </form>
   </div>

@@ -15,5 +15,6 @@
       <label for="passwordCheck" class="form-label">Repete password:</label><br>
       <input type="password" class="form-control col-4" name="passwordCheck" [(ngModel)]="passwordCheck"><br><br>
       <button type="button" class="btn btn-dark" name="edit" (click)="edit()">Edit User</button>
+      <button class="btn btn-dark" [routerLink]="['/dashboard']">Cancel</button>
     </form>
   </div>
