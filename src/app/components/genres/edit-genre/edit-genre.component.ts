@@ -90,6 +90,7 @@ export class EditGenreComponent implements OnInit {
 
     //remove the genre from the list
     remove(){
+      this.removeGenreFromFilm()
       this.genreService.removeGenre(this.genre.id).subscribe(response => {
 				if (response.success) {
 					this.router.navigate(['films/film-list']);
@@ -154,4 +155,22 @@ export class EditGenreComponent implements OnInit {
         }
       }
     }
+
+
+    //remove genre from film genre list when genre is deleted
+    removeGenreFromFilm(){
+      let inserted= false;
+      for(let filmOfList of this.films){
+        for(let genre of filmOfList.genres){
+          if(genre.id== this.genre.id){
+              inserted= true;
+          }
+        }
+        if(inserted==true && filmOfList.created_by == this.userId){
+          filmOfList.genres= filmOfList.genres.filter((genre: { id: number; })=> genre.id!= this.genre.id)
+          this.filmService.editFilm(filmOfList).subscribe()
+        }
+      }
+    }
   }
+

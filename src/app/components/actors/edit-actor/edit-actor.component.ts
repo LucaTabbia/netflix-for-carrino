@@ -88,6 +88,7 @@ export class EditActorComponent implements OnInit {
     }
     //delete the actor from the list
     remove(){
+      this.removeActorFromFilm()
       this.actorService.removeActor(this.actor.id).subscribe(response => {
 				if (response.success) {
 					this.router.navigate(['actors/actor-list']);
@@ -146,4 +147,22 @@ export class EditActorComponent implements OnInit {
         }
       }
     }
+    
+
+    //remove actor from film when actor is deleted
+    removeActorFromFilm(){
+      let inserted= false;
+      for(let filmOfList of this.films){
+        for(let actor of filmOfList.actors){
+          if(actor.id== this.actor.id){
+              inserted= true;
+          }
+        }
+        if(inserted==true && filmOfList.created_by == this.userId){
+          filmOfList.actors= filmOfList.actors.filter((actor: { id: number; })=> actor.id!= this.actor.id)
+          this.filmService.editFilm(filmOfList).subscribe()
+        }
+      }
+    }
   }
+
