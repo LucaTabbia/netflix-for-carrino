@@ -8,6 +8,7 @@
         <div class="genre-buttons">
           <button class="btn btn-dark" (click)="addToFavorites(genre.id)">Add genre to favorites</button>
           <button *ngIf="genre.created_by== userId" class="btn btn-dark" [routerLink]="['/genres/edit-genre/', genre.id]">Edit genre</button>
+          <button class="btn btn-dark" [routerLink]="['/genres/genre-film-list/', genre.id]">Go to films</button>
         </div>
       </div>
     </div>

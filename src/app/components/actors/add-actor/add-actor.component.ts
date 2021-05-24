@@ -68,7 +68,6 @@ export class AddActorComponent implements OnInit {
     }
     this.editFilm()
     this.actorService.addActor(this.actor).subscribe(response=>{
-      console.log(response);
       this.actor={
         id: 0,
         firstname: '',

@@ -12,6 +12,9 @@ import { GenreListComponent } from './components/genres/genre-list/genre-list.co
 import { AddGenreComponent } from './components/genres/add-genre/add-genre.component';
 import { EditGenreComponent } from './components/genres/edit-genre/edit-genre.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
+import { FilmViewComponent } from './components/films/film-view/film-view.component';
+import { GenreFilmListComponent } from './components/genres/genre-film-list/genre-film-list.component';
+import { ActorFilmListComponent } from './components/actors/actor-film-list/actor-film-list.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -26,7 +29,10 @@ const routes: Routes = [
   {path: 'genres/genre-list', component: GenreListComponent},
   {path: 'genres/add-genre', component: AddGenreComponent},
   {path: 'genres/edit-genre/:id', component: EditGenreComponent},
-  {path: 'user-edit', component: UserEditComponent}
+  {path: 'user-edit', component: UserEditComponent},
+  {path: 'films/film-view/:id', component: FilmViewComponent},
+  {path: 'genres/genre-film-list/:id', component: GenreFilmListComponent},
+  {path: 'actors/actor-film-list/:id', component: ActorFilmListComponent},
 
 ];
 

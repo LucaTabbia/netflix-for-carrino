@@ -1,9 +1,5 @@
 <div class="container-personal">
-    <button class="add-button btn btn-dark" [routerLink]="['/films/add-film']">Add new film</button>
-    <form class="search-form">
-      <input type="search" name="search" class="form-control me-2 search-bar" placeholder="Search" aria-label="Search" [(ngModel)]="searchTag">
-      <button class="btn btn-outline-success search-button" type="submit" (click)="search()">Search</button>
-    </form>
+    <button class="back-button btn btn-dark" [routerLink]="['/actors/actor-list']">Go back</button>
       <div class="row">
         <div class="card col-3 film-container" *ngFor="let film of films" [routerLink]="['/films/film-view/', film.id]">
           <div class="card-img-top" style="height: 65%;">
@@ -22,4 +18,3 @@
         </div>
       </div>
   </div>
-    

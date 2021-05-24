@@ -1,0 +1,33 @@
+<div class="container-personal" [ngStyle]="{ 'background-image': 'url(' + film.cover_url + ')'}">
+    <div class="text-container">
+        <div class="film-info">
+            <div class="info-top-row">
+                <h4>{{film.title}}</h4>
+                <p>{{film.release_year}}</p>
+                <p> vote: {{film.vote}}</p>
+            </div>
+            <div class="info-bottom-row">
+                <div *ngFor="let actor of film.actors">
+                    {{actor.firstname}} {{actor.lastname}}, 
+                </div>
+            </div>
+            <div>
+                Directed by: {{film.director}}
+            </div>
+        </div>
+        <div class="main-content">
+            <div *ngFor="let genre of film.genres">
+                {{genre.name}}
+            </div>
+            <div>
+                {{film.description}}
+            </div>
+            <div>
+                {{film.plot}}
+            </div>
+            <div>
+                {{film.duration}}
+            </div>
+        </div>
+    </div>
+</div>

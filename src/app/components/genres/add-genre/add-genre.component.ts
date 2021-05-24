@@ -72,7 +72,6 @@ export class AddGenreComponent implements OnInit {
     }
     this.editFilm()
     this.genreService.addGenre(this.genre).subscribe(response=>{
-      console.log(response);
       this.genre={
         id: 0,
         name: '',

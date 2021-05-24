@@ -9,6 +9,7 @@
         <div class="actor-buttons">
           <button class="btn btn-dark" (click)="addToFavorites(actor.id)">Add actor to favorites</button>
           <button *ngIf="actor.created_by== userId" class="btn btn-dark" [routerLink]="['/actors/edit-actor/', actor.id]">Edit Actor</button>
+          <button class="btn btn-dark" [routerLink]="['/actors/actor-film-list/', actor.id]">Go to films</button>
         </div>
       </div>
     </div>

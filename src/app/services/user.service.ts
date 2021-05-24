@@ -31,11 +31,9 @@ export class UserService {
     return this.http.post<User|null>(this.loginUrl, {username: username, password: password}, this.httpOption
       ).pipe(tap(response=> {
         this.loggedUser = response;
-        console.log(this.loggedUser?.favorite_films)
         if(rememberMe){
         this.localStorage.set('loggedUser', response);
         }
-        console.log(this.loggedUser?.token)
       }),
       catchError(error=>{
         this.loggedUser = null;

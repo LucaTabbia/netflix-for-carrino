@@ -96,7 +96,6 @@ export class AddFilmComponent implements OnInit {
     //see the function
 //    this.editActorsAndGenres();
     this.filmService.addFilm(this.film).subscribe(response=>{
-      console.log(response);
       this.film={
         id: 0,
         title: '',

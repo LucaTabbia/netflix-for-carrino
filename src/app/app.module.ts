@@ -22,6 +22,9 @@ import { GenreListComponent } from './components/genres/genre-list/genre-list.co
 import { AddGenreComponent } from './components/genres/add-genre/add-genre.component';
 import { EditGenreComponent } from './components/genres/edit-genre/edit-genre.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
+import { FilmViewComponent } from './components/films/film-view/film-view.component';
+import { GenreFilmListComponent } from './components/genres/genre-film-list/genre-film-list.component';
+import { ActorFilmListComponent } from './components/actors/actor-film-list/actor-film-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +42,9 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
     AddGenreComponent,
     EditGenreComponent,
     UserEditComponent,
+    FilmViewComponent,
+    GenreFilmListComponent,
+    ActorFilmListComponent,
   ],
   imports: [
     BrowserModule,
