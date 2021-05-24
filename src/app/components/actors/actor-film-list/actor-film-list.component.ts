@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Film } from 'src/app/models/film';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faHeart as faHeartEmpty } from '@fortawesome/free-regular-svg-icons';
 import { FilmService } from 'src/app/services/film.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -11,6 +13,9 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ActorFilmListComponent implements OnInit {
 
+  faEdit= faEdit;
+  faHeart= faHeart;
+  faHeartEmpty= faHeartEmpty;
   films: any[]= [];
   userId: number= this.userService.loggedUser ? this.userService.loggedUser.id : 0
 
@@ -41,6 +46,9 @@ export class ActorFilmListComponent implements OnInit {
         for(let film of films){
           for(let actor of film.actors){
             if(actor.id== this.actRoute.snapshot.params.id){
+              film= Object.assign(film, {
+                isFavorite: false
+              })
               this.films.push(film)
               break;
             }

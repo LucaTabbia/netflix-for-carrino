@@ -6,18 +6,17 @@
     </form>
       <div class="row">
         <div class="card col-3 film-container" *ngFor="let film of films" [routerLink]="['/films/film-view/', film.id]">
-          <div class="card-img-top" style="height: 65%;">
+          <div class="card-img-top" style="height: 60%;">
             <img src="{{film.cover_url}}" alt="" class="img-film">
           </div>
           <h4>{{film.title}}</h4>
           <p>{{film.description}}</p>
           <div class="rating">
-            <p>{{film.vote}}</p>
-            <ngb-rating (rateChange)="newVote($event, film)"></ngb-rating>
+            <app-star-rating [vote]="film.vote" [canEdit]="true" class="votes"></app-star-rating>
           </div>
           <div class="film-buttons">
-            <button class="btn btn-dark" (click)="addToFavorites(film.id)">Add film to favorites</button>
-            <button *ngIf="film.created_by== userId"class="btn btn-dark" [routerLink]="['/films/edit-film/', film.id]">Edit film</button>
+            <fa-icon [icon]="film.isFavorite?faHeart:faHeartEmpty" (click)="addToFavorites(film.id); $event.stopPropagation()" size="2x" class="heart"></fa-icon>
+            <button *ngIf="film.created_by== userId"class="btn btn-dark" (click)="$event.stopPropagation()" [routerLink]="['/films/edit-film/', film.id]">Edit film</button>
           </div>
         </div>
       </div>

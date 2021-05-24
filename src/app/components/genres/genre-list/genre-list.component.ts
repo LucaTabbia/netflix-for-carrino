@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GenreService } from 'src/app/services/genre.service';
 import { UserService } from 'src/app/services/user.service';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartEmpty } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-genre-list',
@@ -9,6 +11,8 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class GenreListComponent implements OnInit {
 
+  faHeart= faHeart;
+  faHeartEmpty= faHeartEmpty;
   genres: any[]= [];
   userId: number= this.userService.loggedUser ? this.userService.loggedUser.id : 0;
 
@@ -28,6 +32,11 @@ export class GenreListComponent implements OnInit {
       if(genres.length==0){
         alert('there are no genres');
       }else{
+        for(let genre of genres){
+          genre= Object.assign(genre, {
+            isFavorite: false
+          })
+        }
         this.genres = genres;
       }
     });

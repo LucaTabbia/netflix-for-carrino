@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Film } from 'src/app/models/film';
 import { FilmService } from 'src/app/services/film.service';
 import { UserService } from 'src/app/services/user.service';
+import { faHeart} from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartEmpty} from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-film-list',
@@ -9,6 +11,10 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./film-list.component.scss']
 })
 export class FilmListComponent implements OnInit {
+
+  faHeart= faHeart;
+  faHeartEmpty= faHeartEmpty;
+
   films: any[]= [];
   searchTag: string= '';
   filmsForSearch: any[]= [];
@@ -49,10 +55,10 @@ export class FilmListComponent implements OnInit {
 
 
   //add a vote to the film
-  newVote(value: any, film: Film){
-    film.votes.push(value);
-    this.filmService.editFilm(film)
-  }
+	setVote(film: Film, vote: number) {
+		film.vote = vote;
+		this.filmService.editFilm(film).subscribe(response => console.log(response))
+	}
 
 
   //get the list of films
@@ -61,6 +67,11 @@ export class FilmListComponent implements OnInit {
       if(films.length==0){
         alert('there are no films');
       }else{
+        for(let film of films){
+          film= Object.assign(film, {
+            isFavorite: false
+          })
+        }
         this.films = films;
         this.filmsForSearch= films;
       }

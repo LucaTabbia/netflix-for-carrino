@@ -4,6 +4,9 @@
 .container-personal{
     margin-top: 60px;
 }
+.card{
+    height: 100vh;
+}
 .card-img-top{
     margin-top: 15px;
     border: 1px solid black;
@@ -23,4 +26,7 @@
     position: relative;
     left: 45%;
     margin-bottom: 10px;
+}
+.heart:hover{
+    color: red;
 }

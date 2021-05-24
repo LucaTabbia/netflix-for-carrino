@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { Film } from 'src/app/models/film';
 import { FilmService } from 'src/app/services/film.service';
 import { UserService } from 'src/app/services/user.service';
@@ -33,6 +34,7 @@ export class FilmViewComponent implements OnInit {
     private filmService: FilmService,
     private userService: UserService,
     private actRoute: ActivatedRoute,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -67,5 +69,8 @@ export class FilmViewComponent implements OnInit {
   //add to favorites
   addToFavorites(id: number){
     this.userService.addFavoriteFilm(id.toString()).subscribe()     
+  }
+  back(){
+    this.location.back()
   }
 }

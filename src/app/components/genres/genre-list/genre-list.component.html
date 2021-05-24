@@ -2,11 +2,11 @@
   <button class="add-button btn btn-dark" [routerLink]="['/genres/add-genre']">Add new genre</button>
     <div class="row">
       <div class="card col-3 genre-container" *ngFor="let genre of genres" style="margin-bottom: 10px">
-        <img src="{{genre.image_url}}" class="card-img-top" alt="" style="height: 65%;">
+        <img src="{{genre.image_url}}" class="card-img-top" alt="" style="height: 60%;">
         <h3>{{genre.name}}</h3>
         <p>{{genre.films}}</p>
         <div class="genre-buttons">
-          <button class="btn btn-dark" (click)="addToFavorites(genre.id)">Add genre to favorites</button>
+          <fa-icon [icon]="genre.isFavorite?faHeart:faHeartEmpty" (click)="addToFavorites(genre.id); $event.stopPropagation()" size="2x" class="heart"></fa-icon>
           <button *ngIf="genre.created_by== userId" class="btn btn-dark" [routerLink]="['/genres/edit-genre/', genre.id]">Edit genre</button>
           <button class="btn btn-dark" [routerLink]="['/genres/genre-film-list/', genre.id]">Go to films</button>
         </div>

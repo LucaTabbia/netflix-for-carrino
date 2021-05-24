@@ -7,13 +7,21 @@
 .film-container{
     margin-bottom: 20px;
 }
+.edit:hover{
+    color:greenyellow;
+}
+.votes{
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
 .card-img-top{
     margin-top: 15px;
     border: 1px solid black;
     overflow:hidden;
 }
-.rating{
-    display: flex;
+.card{
+    height: 100vh;
 }
 .film-buttons{
     display: flex;
@@ -34,4 +42,7 @@
     position: relative;
     left: 45%;
     margin-bottom: 10px;
+}
+.heart:hover{
+    color: red;
 }
