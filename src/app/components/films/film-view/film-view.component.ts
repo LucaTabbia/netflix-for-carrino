@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Film } from 'src/app/models/film';
 import { FilmService } from 'src/app/services/film.service';
 import { UserService } from 'src/app/services/user.service';
+import { faEdit } from '@fortawesome/free-regular-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-film-view',
@@ -12,6 +14,8 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class FilmViewComponent implements OnInit {
 
+  faBack= faArrowLeft;
+  faEdit= faEdit;
   film: Film= {
     id: 0,
     title: '',

@@ -1,14 +1,20 @@
 <div class="container-personal" style="width: 100%; margin-top: 30px;">
-  <button class="add-button btn btn-dark" [routerLink]="['/genres/add-genre']">Add new genre</button>
+  <div class="top-plus-icon">
+    <fa-icon [icon]="faPlus" class="plus" size="2x" [routerLink]="['/genres/add-genre']"></fa-icon>
+  </div>
     <div class="row">
       <div class="card col-3 genre-container" *ngFor="let genre of genres" style="margin-bottom: 10px">
         <img src="{{genre.image_url}}" class="card-img-top" alt="" style="height: 60%;">
         <h3>{{genre.name}}</h3>
         <p>{{genre.films}}</p>
-        <div class="genre-buttons">
-          <fa-icon [icon]="genre.isFavorite?faHeart:faHeartEmpty" (click)="addToFavorites(genre.id); $event.stopPropagation()" size="2x" class="heart"></fa-icon>
-          <button *ngIf="genre.created_by== userId" class="btn btn-dark" [routerLink]="['/genres/edit-genre/', genre.id]">Edit genre</button>
-          <button class="btn btn-dark" [routerLink]="['/genres/genre-film-list/', genre.id]">Go to films</button>
+        <div class="genre-icons">
+          <div class="left-icons">
+            <fa-icon [icon]="genre.isFavorite?faHeart:faHeartEmpty" (click)="addToFavorites(genre.id); $event.stopPropagation()" size="2x" class="heart"></fa-icon>
+            <fa-icon [icon]="faEdit" class="edit" [routerLink]="['/genres/edit-genre/', genre.id]" size="2x"></fa-icon>
+          </div>
+          <div class="right-icons">
+            <fa-icon [icon]="faList" size="2x" class="film-list" [routerLink]="['/genres/genre-film-list/', genre.id]"></fa-icon>
+          </div>
         </div>
       </div>
     </div>

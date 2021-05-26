@@ -7,8 +7,12 @@
 .film-container{
     margin-bottom: 20px;
 }
-.edit:hover{
-    color:greenyellow;
+.top-back-icon{
+    margin-bottom: 20px;
+}
+.back{
+    position: relative;
+    left: calc(50% - 0.85rem);
 }
 .votes{
     position: absolute;
@@ -45,4 +49,10 @@
 }
 .heart:hover{
     color: red;
+}
+.back:hover{
+    color:darkred
+}
+.edit:hover{
+    color:greenyellow;
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { faArrowLeft, faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Actor } from 'src/app/models/actor';
 import { ActorService } from 'src/app/services/actor.service';
 import { FilmService } from 'src/app/services/film.service';
@@ -12,6 +13,9 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class EditActorComponent implements OnInit {
 
+  faPencil= faPencilAlt;
+  faTrash= faTrashAlt;
+  faBack= faArrowLeft;
   actor: Actor={
     id: 0,
     firstname: '',

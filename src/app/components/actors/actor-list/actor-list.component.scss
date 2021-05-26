@@ -11,22 +11,37 @@
     margin-top: 15px;
     border: 1px solid black;
 }
-.actor-buttons{
-    display: flex;
-    position: absolute;
-    bottom: 15px;
-    justify-content: space-around;
-}
 .actor-container{
     margin-bottom: 20px;
     height: 65vh;
 }
-.add-button{
-    width: 10%;
+.top-plus-icon{
+    margin-bottom: 20px;
+}
+.plus{
     position: relative;
-    left: 45%;
-    margin-bottom: 10px;
+    left: calc(50% - 0.85rem);
+}
+.edit{
+    margin-left: 15px;
 }
 .heart:hover{
     color: red;
+}
+.edit:hover, .plus:hover{
+    color:greenyellow;
+}
+.film-list:hover{
+    color: darkorange;
+}
+.actor-icons{
+    width:calc(100% - 30px);
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 15px;
+    margin: 0;
+}
+.left-icons, .right-icons{
+    margin: 0;
 }

@@ -37,11 +37,12 @@
 .search-bar, .search-button{
     margin: 0;
 }
-.add-button{
-    width: 10%;
+.plus{
     position: relative;
-    left: 45%;
-    margin-bottom: 10px;
+    left: calc(50% - 0.85rem);
+}
+.top-plus-icon{
+    margin-bottom: 20px;
 }
 .img-film{
     width: 100%;
@@ -51,6 +52,12 @@
 .card:hover .img-film{
     transform: scale(1.1,1.1);
 }
+.edit{
+    margin-left: 15px;
+}
 .heart:hover{
     color: red;
+}
+.edit:hover, .plus:hover{
+    color:greenyellow;
 }

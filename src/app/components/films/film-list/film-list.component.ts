@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Film } from 'src/app/models/film';
 import { FilmService } from 'src/app/services/film.service';
 import { UserService } from 'src/app/services/user.service';
-import { faHeart} from '@fortawesome/free-solid-svg-icons';
-import { faHeart as faHeartEmpty} from '@fortawesome/free-regular-svg-icons';
+import { faHeart, faPlus} from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faHeart as faHeartEmpty} from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-film-list',
@@ -12,6 +12,8 @@ import { faHeart as faHeartEmpty} from '@fortawesome/free-regular-svg-icons';
 })
 export class FilmListComponent implements OnInit {
 
+  faPlus= faPlus;
+  faEdit= faEdit;
   faHeart= faHeart;
   faHeartEmpty= faHeartEmpty;
 

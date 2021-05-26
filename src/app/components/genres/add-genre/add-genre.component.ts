@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { faArrowLeft, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Genre } from 'src/app/models/genre';
 import { FilmService } from 'src/app/services/film.service';
 import { GenreService } from 'src/app/services/genre.service';
@@ -12,6 +13,8 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AddGenreComponent implements OnInit {
 
+  faPlus= faPlus;
+  faBack= faArrowLeft;
   genre: Genre={
     id: 0,
     name: '',
@@ -112,5 +115,15 @@ export class AddGenreComponent implements OnInit {
         }
       }
     }
+  }
+
+  cancel(){
+    this.genre={
+      id: 0,
+      name: '',
+      image_url: '',
+      created_by: 0
+    };
+    this.router.navigate(['films/film-list'])
   }
 }

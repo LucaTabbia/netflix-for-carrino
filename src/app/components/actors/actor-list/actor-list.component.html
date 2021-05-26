@@ -1,15 +1,21 @@
 <div class="container-personal" style="width: 100%; margin-top: 30px;">
-  <button class="add-button btn btn-dark" [routerLink]="['/actors/add-actor']">Add new actor</button>
+  <div class="top-plus-icon">
+    <fa-icon [icon]="faPlus" class="plus" size="2x" [routerLink]="['/actors/add-actor']"></fa-icon>
+  </div>
     <div class="row">
       <div class="card col-3 actor-container" *ngFor="let actor of actors" style="margin-bottom: 10px">
         <img src="{{actor.photo_url}}" class="card-img-top" alt="" style="height: 60%;">
         <h3>{{actor.firstname}}{{actor.lastname}}</h3>
         <h5>{{actor.birthdate}}</h5>
         <p>{{actor.films}}</p>
-        <div class="actor-buttons">
-          <fa-icon [icon]="actor.isFavorite?faHeart:faHeartEmpty" (click)="addToFavorites(actor.id); $event.stopPropagation()" size="2x" class="heart"></fa-icon>
-          <button *ngIf="actor.created_by== userId" class="btn btn-dark" [routerLink]="['/actors/edit-actor/', actor.id]">Edit Actor</button>
-          <button class="btn btn-dark" [routerLink]="['/actors/actor-film-list/', actor.id]">Go to films</button>
+        <div class="actor-icons">
+          <div class="left-icons">
+            <fa-icon [icon]="actor.isFavorite?faHeart:faHeartEmpty" (click)="addToFavorites(actor.id); $event.stopPropagation()" size="2x" class="heart"></fa-icon>
+            <fa-icon [icon]="faEdit" *ngIf="actor.created_by== userId" class="edit" (click)="$event.stopPropagation()" [routerLink]="['/actors/edit-actor/', actor.id]" size="2x"></fa-icon>
+          </div>
+          <div class="right-icons">
+            <fa-icon [icon]="faList" class="film-list" size="2x" [routerLink]="['/actors/actor-film-list/', actor.id]"></fa-icon>
+          </div>
         </div>
       </div>
     </div>

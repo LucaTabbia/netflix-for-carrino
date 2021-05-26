@@ -1,21 +1,25 @@
-<div class="container" style="margin-top: 30px;">
+<div class="container-personal" style="margin-top: 30px;">
     <form method="POST">
       <label for="id" class="form-label">ID: </label><br>
-      <input type="number" class="form-control col-4" name="id" [(ngModel)]="actor.id"><br><br>
+      <input type="number" class="form-control" name="id" [(ngModel)]="actor.id"><br><br>
       <label for="firstname" class="form-label">Firstname:</label><br>
-      <input type="text" class="form-control col-4" name="firstname" [(ngModel)]="actor.firstname"><br><br>
+      <input type="text" class="form-control" name="firstname" [(ngModel)]="actor.firstname"><br><br>
       <label for="lastname" class="form-label">Lastname:</label><br>
-      <input type="text" class="form-control col-4" name="lastname" [(ngModel)]="actor.lastname"><br><br>
+      <input type="text" class="form-control" name="lastname" [(ngModel)]="actor.lastname"><br><br>
       <label for="birthdate" class="form-label">Birthdate:</label><br>
-      <input type="date" class="form-control col-4" name="birthdate" [(ngModel)]="actor.birthdate"><br><br>
+      <input type="date" class="form-control" name="birthdate" [(ngModel)]="actor.birthdate"><br><br>
       <label for="photo_url" class="form-label">Photo url:</label><br>
-      <input type="text" class="form-control col-4" name="photo_url" [(ngModel)]="actor.photo_url"><br><br>
-      <label for="films" class="form-label">Films:</label><br>
+      <input type="text" class="form-control" name="photo_url" [(ngModel)]="actor.photo_url"><br><br>
+      <label for="films" class="form-label film-label">Films:</label><br>
       <div id="filmsForm" class="row buttons-to-select">
         <button *ngFor="let film of films"class="btn button-to-select" [ngClass]="film.selected?'btn-dark':'btn-light'" name="add-film" (click)="addFilm(film.id)">{{film.title}}</button>
       </div>
-      <button type="submit" class="btn btn-dark" name="add-actor" (click)="add()">Add Actor</button>
-      <button class="btn btn-dark" (click)="cancel()">Cancel</button>
+      <div class="icons-row">
+        <div class="icons-container">
+          <fa-icon [icon]="faPlus" class="plus" size="2x" name="add-actor" (click)="add()"></fa-icon>
+          <fa-icon [icon]="faBack" class="back" (click)="cancel()" size="2x"></fa-icon>
+        </div>
+      </div>
     </form>
   </div>
 

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FilmService } from 'src/app/services/film.service';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartEmpty} from '@fortawesome/free-regular-svg-icons';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,10 +10,14 @@ import { FilmService } from 'src/app/services/film.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+
+  faHeart= faHeart;
+  faHeartEmpty= faHeartEmpty;
   lastFilms: any[]= [];
   bestFilms: any[]= [];
 
   constructor(
+    private userService: UserService,
     private filmService: FilmService,
   ) { }
 
@@ -79,6 +86,9 @@ export class DashboardComponent implements OnInit {
             break;
           }
           if(film.vote== bestVote1 || film.vote== bestVote2 || film.vote== bestVote3 || film.vote== bestVote4){
+            film= Object.assign(film, {
+              isFavorite: false
+            })
             this.bestFilms.push(film);
             count++
           }
@@ -144,12 +154,20 @@ export class DashboardComponent implements OnInit {
           }
           let filmTime= Date.parse(film.created_at)
           if(filmTime== lastDate1 || filmTime== lastDate2 || filmTime== lastDate3 || filmTime== lastDate4){
+            film= Object.assign(film, {
+              isFavorite: false
+            })
             this.lastFilms.push(film);
             count++
           }
         }
       }
     });
+  }
+
+  
+  addToFavorites(id: number){
+    this.userService.addFavoriteFilm(id.toString()).subscribe()     
   }
 
 }

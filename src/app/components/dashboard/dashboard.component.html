@@ -1,20 +1,34 @@
 <div class="container-personal" style="width: 100%; margin-top: 30px;">
-  <h3>Our last films added:</h3>
+  <h3 class="dashboard-titles">Our last films added:</h3>
     <div class="row">
-      <div class="card col-3 film-container" *ngFor="let film of lastFilms" style="margin-bottom: 10px">
-        <img src="{{film.cover_url}}" class="card-img-top" alt="" style="height: 65%;">
-        <h3>{{film.title}}</h3>
+      <div class="card col-3 film-container" *ngFor="let film of lastFilms" [routerLink]="['/films/film-view/', film.id]">
+        <div class="card-img-top" style="height: 60%;">
+          <img src="{{film.cover_url}}" alt="" class="img-film">
+        </div>
+        <h4>{{film.title}}</h4>
         <p>{{film.description}}</p>
-        <p>{{film.vote}}</p>
+        <div class="rating">
+          <app-star-rating [vote]="film.vote" [canEdit]="true" class="votes"></app-star-rating>
+        </div>
+        <div class="film-buttons">
+          <fa-icon [icon]="film.isFavorite?faHeart:faHeartEmpty" (click)="addToFavorites(film.id); $event.stopPropagation()" size="2x" class="heart"></fa-icon>
+        </div>
       </div>
     </div>
-    <h3>Out best films:</h3>
+    <h3 class="dashboard-titles">Out best films:</h3>
     <div class="row">
-        <div class="card col-3 film-container" *ngFor="let film of bestFilms" style="margin-bottom: 10px">
-          <img src="{{film.cover_url}}" class="card-img-top" alt="" style="height: 65%;">
-          <h3>{{film.title}}</h3>
+        <div class="card col-3 film-container" *ngFor="let film of bestFilms" [routerLink]="['/films/film-view/', film.id]">
+          <div class="card-img-top" style="height: 60%;">
+            <img src="{{film.cover_url}}" alt="" class="img-film">
+          </div>
+          <h4>{{film.title}}</h4>
           <p>{{film.description}}</p>
-          <p>{{film.vote}}</p>
+          <div class="rating">
+            <app-star-rating [vote]="film.vote" [canEdit]="true" class="votes"></app-star-rating>
+          </div>
+          <div class="film-buttons">
+            <fa-icon [icon]="film.isFavorite?faHeart:faHeartEmpty" (click)="addToFavorites(film.id); $event.stopPropagation()" size="2x" class="heart"></fa-icon>
+          </div>
         </div>
       </div>
 </div>

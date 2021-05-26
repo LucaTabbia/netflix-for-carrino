@@ -1,5 +1,7 @@
 <div class="container-personal">
-    <button class="add-button btn btn-dark" [routerLink]="['/films/add-film']">Add new film</button>
+  <div class="top-plus-icon">
+    <fa-icon [icon]="faPlus" class="plus" size="2x" [routerLink]="['/films/add-film']"></fa-icon>
+  </div>
     <form class="search-form">
       <input type="search" name="search" class="form-control me-2 search-bar" placeholder="Search" aria-label="Search" [(ngModel)]="searchTag">
       <button class="btn btn-outline-success search-button" type="submit" (click)="search()">Search</button>
@@ -16,7 +18,7 @@
           </div>
           <div class="film-buttons">
             <fa-icon [icon]="film.isFavorite?faHeart:faHeartEmpty" (click)="addToFavorites(film.id); $event.stopPropagation()" size="2x" class="heart"></fa-icon>
-            <button *ngIf="film.created_by== userId"class="btn btn-dark" (click)="$event.stopPropagation()" [routerLink]="['/films/edit-film/', film.id]">Edit film</button>
+            <fa-icon [icon]="faEdit" *ngIf="film.created_by== userId" class="edit" (click)="$event.stopPropagation()" [routerLink]="['/films/edit-film/', film.id]" size="2x"></fa-icon>
           </div>
         </div>
       </div>

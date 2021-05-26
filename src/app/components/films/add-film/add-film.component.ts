@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { faArrowLeft, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Actor } from 'src/app/models/actor';
 import { Film } from 'src/app/models/film';
 import { Genre } from 'src/app/models/genre';
@@ -15,6 +16,8 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AddFilmComponent implements OnInit {
 
+  faPlus= faPlus;
+  faBack= faArrowLeft;
   film: Film= {
   id: 0,
   title: '',

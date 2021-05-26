@@ -15,6 +15,13 @@
 .card{
     height: 100vh;
 }
+.top-back-icon{
+    margin-bottom: 20px;
+}
+.back{
+    position: relative;
+    left: calc(50% - 0.85rem);
+}
 .card-img-top{
     margin-top: 15px;
     border: 1px solid black;
@@ -42,4 +49,10 @@
 }
 .heart:hover{
     color: red;
+}
+.edit:hover{
+    color:greenyellow;
+}
+.back:hover{
+    color:darkred
 }

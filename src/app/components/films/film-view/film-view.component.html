@@ -29,6 +29,7 @@
                 {{film.duration}}
             </div>
         </div>
-        <button class="btn btn-dark" (click)="back()">Go back</button>
+        <fa-icon [icon]="faBack" class="back" (click)="back()" size="2x"></fa-icon>
+        <fa-icon [icon]="faEdit" *ngIf="film.created_by== userId" class="edit" [routerLink]="['/films/edit-film/', film.id]" size="2x"></fa-icon>
     </div>
 </div>

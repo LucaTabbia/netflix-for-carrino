@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActorService } from 'src/app/services/actor.service';
 import { UserService } from 'src/app/services/user.service';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as faHeartEmpty } from '@fortawesome/free-regular-svg-icons';
+import { faHeart, faList, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faHeart as faHeartEmpty } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-actor-list',
@@ -11,6 +11,9 @@ import { faHeart as faHeartEmpty } from '@fortawesome/free-regular-svg-icons';
 })
 export class ActorListComponent implements OnInit {
 
+  faList= faList;
+  faEdit= faEdit;
+  faPlus= faPlus;
   faHeart= faHeart;
   faHeartEmpty= faHeartEmpty;
   actors: any[]= [];

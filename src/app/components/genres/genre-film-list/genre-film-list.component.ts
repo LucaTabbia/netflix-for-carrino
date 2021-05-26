@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as faHeartEmpty } from '@fortawesome/free-regular-svg-icons';
+import { faArrowLeft, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faHeart as faHeartEmpty } from '@fortawesome/free-regular-svg-icons';
 import { Film } from 'src/app/models/film';
 import { FilmService } from 'src/app/services/film.service';
 import { UserService } from 'src/app/services/user.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-genre-film-list',
@@ -14,12 +15,15 @@ import { UserService } from 'src/app/services/user.service';
 export class GenreFilmListComponent implements OnInit {
 
 
+  faBack= faArrowLeft;
+  faEdit= faEdit;
   faHeart= faHeart;
   faHeartEmpty= faHeartEmpty;
   films: any[]= [];
   userId: number= this.userService.loggedUser ? this.userService.loggedUser.id : 0
 
   constructor(
+    private location: Location,
     private userService: UserService,
     private filmService: FilmService,
     private actRoute: ActivatedRoute,
@@ -63,5 +67,9 @@ export class GenreFilmListComponent implements OnInit {
   //add the film to the user favorites list
   addToFavorites(id: number){
       this.userService.addFavoriteFilm(id.toString()).subscribe()     
+  }
+
+  back(){
+    this.location.back()
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Film } from 'src/app/models/film';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faEdit, faHeart as faHeartEmpty } from '@fortawesome/free-regular-svg-icons';
 import { FilmService } from 'src/app/services/film.service';
 import { UserService } from 'src/app/services/user.service';
@@ -13,6 +13,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ActorFilmListComponent implements OnInit {
 
+  faBack= faArrowLeft;
   faEdit= faEdit;
   faHeart= faHeart;
   faHeartEmpty= faHeartEmpty;

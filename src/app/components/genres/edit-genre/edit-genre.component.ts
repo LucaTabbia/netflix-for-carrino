@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { faArrowLeft, faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Genre } from 'src/app/models/genre';
 import { FilmService } from 'src/app/services/film.service';
 import { GenreService } from 'src/app/services/genre.service';
@@ -12,6 +13,9 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class EditGenreComponent implements OnInit {
 
+  faPencil= faPencilAlt;
+  faTrash= faTrashAlt;
+  faBack= faArrowLeft;
   genre: Genre={
     id: 0,
     name: '',
@@ -74,12 +78,8 @@ export class EditGenreComponent implements OnInit {
             alert('there are no genres');
           }else{
             for(let genre of genres){
-              if(genre.id== this.actRoute.snapshot.params.id && genre.created_by == this.userId){
+              if(genre.id== this.actRoute.snapshot.params.id){
                 this.genre= genre;
-              }
-              if(genre.id== this.actRoute.snapshot.params.id && genre.created_by != this.userId){
-                alert("You haven't the permits to edit this genre")
-                this.router.navigate(['genres/genre-list'])
               }
             }
           }
@@ -87,6 +87,12 @@ export class EditGenreComponent implements OnInit {
       }
     }
 
+              //manca la colonna created_by nel db
+              /*
+              if(genre.id== this.actRoute.snapshot.params.id && genre.created_by != this.userId){
+                alert("You haven't the permits to edit this genre")
+                this.router.navigate(['genres/genre-list'])
+              }*/
 
     //remove the genre from the list
     remove(){
@@ -107,6 +113,7 @@ export class EditGenreComponent implements OnInit {
       //commented because the genre db don't contain any films column
 //      this.genre.films= this.filmsToAdd;
       this.editFilm()
+      console.log(this.genre)
       this.genreService.editGenre(this.genre).subscribe(response => {
 				if (response.success) {
 					this.router.navigate(['films/film-list']);

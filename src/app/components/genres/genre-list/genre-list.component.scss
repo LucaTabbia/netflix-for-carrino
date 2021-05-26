@@ -21,12 +21,33 @@
     margin-bottom: 20px;
     height: 65vh;
 }
-.add-button{
-    width: 10%;
+.plus{
     position: relative;
-    left: 45%;
-    margin-bottom: 10px;
+    left: calc(50% - 0.85rem);
+}
+.top-plus-icon{
+    margin-bottom: 20px;
+}
+.edit{
+    margin-left: 15px;
 }
 .heart:hover{
     color: red;
+}
+.edit:hover, .plus:hover{
+    color:greenyellow;
+}
+.film-list:hover{
+    color: darkorange;
+}
+.genre-icons{
+    width:calc(100% - 30px);
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 15px;
+    margin: 0;
+}
+.left-icons, .right-icons{
+    margin: 0;
 }
