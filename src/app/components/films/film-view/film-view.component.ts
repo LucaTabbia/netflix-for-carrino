@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Film } from 'src/app/models/film';
 import { FilmService } from 'src/app/services/film.service';
 import { UserService } from 'src/app/services/user.service';
-import { faEdit } from '@fortawesome/free-regular-svg-icons';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faHeart as faHeartEmpty } from '@fortawesome/free-regular-svg-icons';
+import { faArrowLeft, faHeart } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-film-view',
@@ -14,6 +14,8 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 })
 export class FilmViewComponent implements OnInit {
 
+  faHeart= faHeart;
+  faHeartEmpty= faHeartEmpty;
   faBack= faArrowLeft;
   faEdit= faEdit;
   film: Film= {
@@ -34,6 +36,7 @@ export class FilmViewComponent implements OnInit {
     votes: [],
     }
     userId: number=0;
+    isFavorite: boolean= false;
   constructor(
     private filmService: FilmService,
     private userService: UserService,
@@ -56,6 +59,20 @@ export class FilmViewComponent implements OnInit {
       }else{
         for(let film of films){
           if(film.id== this.actRoute.snapshot.params.id){
+            if(this.userService.loggedUser?.favorite_films!=undefined){
+              let userFilms= this.userService.loggedUser?.favorite_films.toString().split(",").map(function(id){
+                return parseInt(id);
+              });
+              if(userFilms!= undefined){
+                if(userFilms.find(x=> x== film.id) != undefined){
+                  this.isFavorite= true;
+                }else{
+                  this.isFavorite= false;
+                }
+              }else{
+                this.isFavorite= false;
+              }
+            }
             this.film= film;
           }
         }
@@ -65,14 +82,45 @@ export class FilmViewComponent implements OnInit {
 
 
   //add a vote to the film
-  newVote(value: any, film: Film){
-    film.votes.push(value);
-    this.filmService.editFilm(film)
-  }
+	setVote(film: Film, vote: number) {
+		film.vote = vote;
+		this.filmService.editFilm(film).subscribe(response => console.log(response))
+	}
 
   //add to favorites
   addToFavorites(id: number){
-    this.userService.addFavoriteFilm(id.toString()).subscribe()     
+    if(this.userService.loggedUser == null){
+      alert('You must be logged!');
+      return;
+    }
+    if(this.isFavorite== true){
+      this.isFavorite= false; 
+    }else{
+      this.isFavorite= true;
+    }
+    if(this.userService.loggedUser != null){
+      if(this.userService.loggedUser?.favorite_films!=undefined){
+        let films = this.userService.loggedUser?.favorite_films.toString().split(",").map(function(id){
+          return parseInt(id);
+        });
+        if(films.find(x=> x== id)== undefined){
+          films.push(id);
+          this.userService.loggedUser.favorite_films.push(id);
+          if(films!= undefined){
+            this.userService.addFavoriteFilm(films.toString()).subscribe();
+          }
+        }else{
+          if(films!= undefined){
+            this.userService.loggedUser.favorite_films = films.filter(x=> x!= id);
+            this.userService.addFavoriteFilm(this.userService.loggedUser.favorite_films.toString()).subscribe();
+          }
+        }
+      }else{
+        this.userService.loggedUser.favorite_films= [];
+        this.userService.loggedUser.favorite_films.push(id);
+        this.userService.addFavoriteFilm(this.userService.loggedUser.favorite_films.toString()).subscribe();
+      }
+    }   
   }
   back(){
     this.location.back()

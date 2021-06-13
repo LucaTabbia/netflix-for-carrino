@@ -68,7 +68,6 @@ export class UserService {
       'Content-Type': 'application/json',
       'Authorization': this.loggedUser ? this.loggedUser.token : ''
     })}
-    console.log(this.loggedUser)
     return this.http.post<any>(this.addFilmUrl,{ids: id}, httpOptions)
     .pipe(tap(response=> {
       console.log(response)

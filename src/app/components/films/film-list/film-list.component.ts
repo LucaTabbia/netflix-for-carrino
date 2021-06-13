@@ -69,10 +69,33 @@ export class FilmListComponent implements OnInit {
       if(films.length==0){
         alert('there are no films');
       }else{
-        for(let film of films){
-          film= Object.assign(film, {
-            isFavorite: false
-          })
+        if(this.userService.loggedUser?.favorite_films!=undefined){
+          let userFilms= this.userService.loggedUser?.favorite_films.toString().split(",").map(function(id){
+            return parseInt(id);
+          });
+          for(let film of films){
+            if(userFilms!= undefined){
+              if(userFilms.find(x=> x== film.id) != undefined){
+                film= Object.assign(film, {
+                  isFavorite: true
+                })
+              }else{
+                film= Object.assign(film, {
+                  isFavorite: false
+                })
+              }
+            }else{
+              film= Object.assign(film, {
+                isFavorite: false
+              })
+            }
+          }
+        }else{
+          for(let film of films){
+            film= Object.assign(film, {
+              isFavorite: false
+            })
+          }
         }
         this.films = films;
         this.filmsForSearch= films;
@@ -83,7 +106,38 @@ export class FilmListComponent implements OnInit {
 
   //add the film to the user favorites list
   addToFavorites(id: number){
-      this.userService.addFavoriteFilm(id.toString()).subscribe()     
+    if(this.userService.loggedUser == null){
+      alert('You must be logged!');
+      return;
+    }
+    if(this.films.find(x=> x.id== id).isFavorite== true){
+      this.films.find(x=> x.id== id).isFavorite= false; 
+    }else{
+      this.films.find(x=> x.id== id).isFavorite= true;
+    }
+    if(this.userService.loggedUser != null){
+      if(this.userService.loggedUser?.favorite_films!=undefined){
+        let films = this.userService.loggedUser?.favorite_films.toString().split(",").map(function(id){
+          return parseInt(id);
+        });
+        if(films.find(x=> x== id)== undefined){
+          films.push(id);
+          this.userService.loggedUser.favorite_films.push(id);
+          if(films!= undefined){
+            this.userService.addFavoriteFilm(films.toString()).subscribe();
+          }
+        }else{
+          if(films!= undefined){
+            this.userService.loggedUser.favorite_films = films.filter(x=> x!= id);
+            this.userService.addFavoriteFilm(this.userService.loggedUser.favorite_films.toString()).subscribe();
+          }
+        }
+      }else{
+        this.userService.loggedUser.favorite_films= [];
+        this.userService.loggedUser.favorite_films.push(id);
+        this.userService.addFavoriteFilm(this.userService.loggedUser.favorite_films.toString()).subscribe();
+      }
+    }   
   }
 
 }

@@ -11,7 +11,8 @@
           <app-star-rating [vote]="film.vote" [canEdit]="true" class="votes"></app-star-rating>
         </div>
         <div class="film-buttons">
-          <fa-icon [icon]="film.isFavorite?faHeart:faHeartEmpty" (click)="addToFavorites(film.id); $event.stopPropagation()" size="2x" class="heart"></fa-icon>
+          <fa-icon [icon]="film.isFavorite?faHeart:faHeartEmpty" (click)="addToFavorites(film.id, 'last'); $event.stopPropagation()" size="2x" class="heart"></fa-icon>
+          <fa-icon [icon]="faEdit" *ngIf="film.created_by== userId" class="edit" (click)="$event.stopPropagation()" [routerLink]="['/films/edit-film/', film.id]" size="2x"></fa-icon>
         </div>
       </div>
     </div>
@@ -27,7 +28,8 @@
             <app-star-rating [vote]="film.vote" [canEdit]="true" class="votes"></app-star-rating>
           </div>
           <div class="film-buttons">
-            <fa-icon [icon]="film.isFavorite?faHeart:faHeartEmpty" (click)="addToFavorites(film.id); $event.stopPropagation()" size="2x" class="heart"></fa-icon>
+            <fa-icon [icon]="film.isFavorite?faHeart:faHeartEmpty" (click)="addToFavorites(film.id, 'best'); $event.stopPropagation()" size="2x" class="heart"></fa-icon>
+            <fa-icon [icon]="faEdit" *ngIf="film.created_by== userId" class="edit" (click)="$event.stopPropagation()" [routerLink]="['/films/edit-film/', film.id]" size="2x"></fa-icon>
           </div>
         </div>
       </div>

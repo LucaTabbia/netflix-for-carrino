@@ -5,6 +5,7 @@ import { faArrowLeft, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faEdit, faHeart as faHeartEmpty } from '@fortawesome/free-regular-svg-icons';
 import { FilmService } from 'src/app/services/film.service';
 import { UserService } from 'src/app/services/user.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-actor-film-list',
@@ -21,6 +22,7 @@ export class ActorFilmListComponent implements OnInit {
   userId: number= this.userService.loggedUser ? this.userService.loggedUser.id : 0
 
   constructor(
+    private location: Location,
     private userService: UserService,
     private filmService: FilmService,
     private actRoute: ActivatedRoute,
@@ -44,25 +46,88 @@ export class ActorFilmListComponent implements OnInit {
       if(films.length==0){
         alert('there are no films');
       }else{
-        for(let film of films){
-          for(let actor of film.actors){
-            if(actor.id== this.actRoute.snapshot.params.id){
-              film= Object.assign(film, {
-                isFavorite: false
-              })
-              this.films.push(film)
-              break;
+        if(this.userService.loggedUser?.favorite_films!= undefined){
+          let userFilms= this.userService.loggedUser?.favorite_films.toString().split(",").map(function(id){
+            return parseInt(id);
+          });
+          for(let film of films){
+            for(let actor of film.actors){
+              if(actor.id== this.actRoute.snapshot.params.id){
+                if(userFilms!= undefined){
+                  if(userFilms.find(x=> x== film.id) != undefined){
+                    film= Object.assign(film, {
+                      isFavorite: true
+                    })
+                  }else{
+                    film= Object.assign(film, {
+                      isFavorite: false
+                    })
+                  }
+                }else{
+                  film= Object.assign(film, {
+                    isFavorite: false
+                  })
+                }
+                this.films.push(film)
+                break;
+              }
+            }
+          }
+        }else{
+          for(let film of films){
+            for(let actor of film.actors){
+              if(actor.id== this.actRoute.snapshot.params.id){
+                film= Object.assign(film, {
+                  isFavorite: false
+                })
+                this.films.push(film)
+              }
             }
           }
         }
       }
     });
-
   }
 
 
   //add the film to the user favorites list
   addToFavorites(id: number){
-      this.userService.addFavoriteFilm(id.toString()).subscribe()     
+    if(this.userService.loggedUser == null){
+      alert('You must be logged!');
+      return;
+    }
+    if(this.films.find(x=> x.id== id).isFavorite== true){
+      this.films.find(x=> x.id== id).isFavorite= false; 
+    }else{
+      this.films.find(x=> x.id== id).isFavorite= true;
+    }
+    if(this.userService.loggedUser != null){
+      if(this.userService.loggedUser?.favorite_films!=undefined){
+        let films = this.userService.loggedUser?.favorite_films.toString().split(",").map(function(id){
+          return parseInt(id);
+        });
+        if(films.find(x=> x== id)== undefined){
+          films.push(id);
+          this.userService.loggedUser.favorite_films.push(id);
+          if(films!= undefined){
+            this.userService.addFavoriteFilm(films.toString()).subscribe();
+          }
+        }else{
+          if(films!= undefined){
+            this.userService.loggedUser.favorite_films = films.filter(x=> x!= id);
+            this.userService.addFavoriteFilm(this.userService.loggedUser.favorite_films.toString()).subscribe();
+          }
+        }
+      }else{
+        this.userService.loggedUser.favorite_films= [];
+        this.userService.loggedUser.favorite_films.push(id);
+        this.userService.addFavoriteFilm(this.userService.loggedUser.favorite_films.toString()).subscribe();
+      }
+    }   
   }
+
+  back(){
+    this.location.back()
+  }
+
 }

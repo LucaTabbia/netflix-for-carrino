@@ -5,31 +5,33 @@
                 <h4>{{film.title}}</h4>
                 <p>{{film.release_year}}</p>
                 <p> vote: {{film.vote}}</p>
+                <p>Directed by: {{film.director}}</p>
             </div>
-            <div class="info-bottom-row">
-                <div *ngFor="let actor of film.actors">
-                    {{actor.firstname}} {{actor.lastname}}, 
-                </div>
+            <div class="info-bottom-row row buttons-to-select">
+                <button *ngFor="let actor of film.actors"class="btn btn-light button-to-select" name="see-actor" [routerLink]="['/actors/actor-film-list/', actor.id]">{{actor.firstname}} {{actor.lastname}}</button>
             </div>
-            <div>
-                Directed by: {{film.director}}
+            <div class="info-bottom-row row buttons-to-select">
+                <button *ngFor="let genre of film.genres"class="btn btn-light button-to-select" name="see-genre" [routerLink]="['/genres/genre-film-list/', genre.id]">{{genre.name}}</button>
             </div>
         </div>
         <div class="main-content">
-            <div *ngFor="let genre of film.genres">
-                {{genre.name}}
-            </div>
-            <div>
-                {{film.description}}
-            </div>
-            <div>
+            <div class="plot">
                 {{film.plot}}
             </div>
-            <div>
+            <div class="time">
                 {{film.duration}}
             </div>
+            <div *ngIf="film.vote != undefined" class="rating">
+                <app-star-rating [vote]="film.vote" [canEdit]="true" class="votes"></app-star-rating>
+            </div>
+            <div *ngIf="film.vote == undefined" class="rating">
+                <app-star-rating [vote]="0" [canEdit]="true" class="votes"></app-star-rating>
+            </div>
         </div>
-        <fa-icon [icon]="faBack" class="back" (click)="back()" size="2x"></fa-icon>
-        <fa-icon [icon]="faEdit" *ngIf="film.created_by== userId" class="edit" [routerLink]="['/films/edit-film/', film.id]" size="2x"></fa-icon>
+        <div class="icons">
+            <fa-icon [icon]="faBack" class="back" (click)="back()" size="2x"></fa-icon>
+            <fa-icon [icon]="isFavorite?faHeart:faHeartEmpty" (click)="addToFavorites(film.id)" size="2x" class="heart"></fa-icon>
+            <fa-icon [icon]="faEdit" *ngIf="film.created_by== userId" class="edit" [routerLink]="['/films/edit-film/', film.id]" size="2x"></fa-icon>
+        </div>
     </div>
 </div>

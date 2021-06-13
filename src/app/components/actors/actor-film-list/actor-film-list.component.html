@@ -1,6 +1,6 @@
 <div class="container-personal">
   <div class="top-back-icon">
-    <fa-icon [icon]="faBack" class="back" [routerLink]="['/actors/actor-list/']" size="2x"></fa-icon>
+    <fa-icon [icon]="faBack" class="back" (click)="back()" size="2x"></fa-icon>
   </div>
       <div class="row">
         <div class="card col-3 film-container" *ngFor="let film of films" [routerLink]="['/films/film-view/', film.id]">

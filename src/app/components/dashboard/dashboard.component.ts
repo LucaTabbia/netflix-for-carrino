@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FilmService } from 'src/app/services/film.service';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as faHeartEmpty} from '@fortawesome/free-regular-svg-icons';
+import { faEdit, faHeart as faHeartEmpty} from '@fortawesome/free-regular-svg-icons';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -11,10 +11,12 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class DashboardComponent implements OnInit {
 
+  faEdit= faEdit;
   faHeart= faHeart;
   faHeartEmpty= faHeartEmpty;
   lastFilms: any[]= [];
   bestFilms: any[]= [];
+  userId: number= this.userService.loggedUser ? this.userService.loggedUser.id : 0
 
   constructor(
     private userService: UserService,
@@ -154,9 +156,34 @@ export class DashboardComponent implements OnInit {
           }
           let filmTime= Date.parse(film.created_at)
           if(filmTime== lastDate1 || filmTime== lastDate2 || filmTime== lastDate3 || filmTime== lastDate4){
-            film= Object.assign(film, {
-              isFavorite: false
-            })
+            if(this.userService.loggedUser?.favorite_films!=undefined){
+              let userFilms= this.userService.loggedUser?.favorite_films.toString().split(",").map(function(id){
+                return parseInt(id);
+              });
+              for(let film of films){
+                if(userFilms!= undefined){
+                  if(userFilms.find(x=> x== film.id) != undefined){
+                    film= Object.assign(film, {
+                      isFavorite: true
+                    })
+                  }else{
+                    film= Object.assign(film, {
+                      isFavorite: false
+                    })
+                  }
+                }else{
+                  film= Object.assign(film, {
+                    isFavorite: false
+                  })
+                }
+              }
+            }else{
+              for(let film of films){
+                film= Object.assign(film, {
+                  isFavorite: false
+                })
+              }
+            }
             this.lastFilms.push(film);
             count++
           }
@@ -166,8 +193,45 @@ export class DashboardComponent implements OnInit {
   }
 
   
-  addToFavorites(id: number){
-    this.userService.addFavoriteFilm(id.toString()).subscribe()     
+  addToFavorites(id: number, type: string){
+    if(this.userService.loggedUser == null){
+      alert('You must be logged!');
+      return;
+    }
+    let chosenList;
+    if(type=="last"){
+      chosenList= this.lastFilms;
+    }else{
+      chosenList= this.bestFilms;
+    }
+    if(chosenList.find(x=> x.id== id).isFavorite== true){
+      chosenList.find(x=> x.id== id).isFavorite= false; 
+    }else{
+      chosenList.find(x=> x.id== id).isFavorite= true;
+    }
+    if(this.userService.loggedUser != null){
+      if(this.userService.loggedUser?.favorite_films!=undefined){
+        let films = this.userService.loggedUser?.favorite_films.toString().split(",").map(function(id){
+          return parseInt(id);
+        });
+        if(films.find(x=> x== id)== undefined){
+          films.push(id);
+          this.userService.loggedUser.favorite_films.push(id);
+          if(films!= undefined){
+            this.userService.addFavoriteFilm(films.toString()).subscribe();
+          }
+        }else{
+          if(films!= undefined){
+            this.userService.loggedUser.favorite_films = films.filter(x=> x!= id);
+            this.userService.addFavoriteFilm(this.userService.loggedUser.favorite_films.toString()).subscribe();
+          }
+        }
+      }else{
+        this.userService.loggedUser.favorite_films= [];
+        this.userService.loggedUser.favorite_films.push(id);
+        this.userService.addFavoriteFilm(this.userService.loggedUser.favorite_films.toString()).subscribe();
+      }
+    }   
   }
 
 }

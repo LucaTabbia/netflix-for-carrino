@@ -27,6 +27,7 @@ export class UserEditComponent implements OnInit {
     token: "",
     last_login: new Date,
   }
+  userImg= "https://pbs.twimg.com/profile_images/740272510420258817/sd2e6kJy_400x400.jpg";
   passwordCheck: string= "";
     constructor(
       private router: Router,
@@ -44,6 +45,9 @@ export class UserEditComponent implements OnInit {
         this.router.navigate(['/login'])
       }else{
         this.user= this.userService.loggedUser;
+        if(this.userService.loggedUser.photo_url!= undefined){
+          this.userImg= this.userService.loggedUser.photo_url;
+        }
         this.passwordCheck= this.user.password;
       }
     }

@@ -34,24 +34,71 @@ export class ActorListComponent implements OnInit {
       if(actors.length==0){
         alert('there are no actors');
       }else{
-        for(let actor of actors){
-          actor= Object.assign(actor, {
-            isFavorite: false
-          })
+        if(this.userService.loggedUser?.favorite_actors!= undefined){
+          let userActors= this.userService.loggedUser?.favorite_actors.toString().split(",").map(function(id){
+            return parseInt(id);
+          });
+          for(let actor of actors){
+            if(userActors!= undefined){
+              if(userActors.find(x=> x== actor.id) != undefined){
+                actor= Object.assign(actor, {
+                  isFavorite: true
+                })
+              }else{
+                actor= Object.assign(actor, {
+                  isFavorite: false
+                })
+              }
+            }else{
+              actor= Object.assign(actor, {
+                isFavorite: false
+              })
+            }
+          }
+        }else{
+          for(let actor of actors){
+            actor= Object.assign(actor, {
+              isFavorite: false
+            })
+          }
         }
         this.actors = actors;
       }
     });
   }
 //add the actor to the user favorite list
-  addToFavorites(id: number){
-    if(this.userService.loggedUser?.favorite_actors!= undefined){
-      let favoriteActorList= this.userService.loggedUser?.favorite_actors.toString()+ ","+id;
-      this.userService.addFavoriteActor(favoriteActorList).subscribe()
-    }
-    else{
-      let favoriteActorList= id.toString();
-      this.userService.addFavoriteActor(favoriteActorList).subscribe()
-    }
+addToFavorites(id: number){
+  if(this.userService.loggedUser == null){
+    alert('You must be logged!');
+    return;
   }
+  if(this.actors.find(x=> x.id== id).isFavorite== true){
+    this.actors.find(x=> x.id== id).isFavorite= false; 
+  }else{
+    this.actors.find(x=> x.id== id).isFavorite= true;
+  }
+  if(this.userService.loggedUser != null){
+    if(this.userService.loggedUser?.favorite_actors!=undefined){
+      let actors = this.userService.loggedUser?.favorite_actors.toString().split(",").map(function(id){
+        return parseInt(id);
+      });
+      if(actors.find(x=> x== id)== undefined){
+        actors.push(id);
+        this.userService.loggedUser.favorite_actors.push(id);
+        if(actors!= undefined){
+          this.userService.addFavoriteActor(actors.toString()).subscribe();
+        }
+      }else{
+        if(actors!= undefined){
+          this.userService.loggedUser.favorite_actors = actors.filter(x=> x!= id);
+          this.userService.addFavoriteActor(this.userService.loggedUser.favorite_actors.toString()).subscribe();
+        }
+      }
+    }else{
+      this.userService.loggedUser.favorite_actors= [];
+      this.userService.loggedUser.favorite_actors.push(id);
+      this.userService.addFavoriteActor(this.userService.loggedUser.favorite_actors.toString()).subscribe();
+    }
+  }   
+}
 }
