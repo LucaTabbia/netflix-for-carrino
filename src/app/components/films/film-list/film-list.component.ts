@@ -57,8 +57,8 @@ export class FilmListComponent implements OnInit {
 
 
   //add a vote to the film
-	setVote(film: Film, vote: number) {
-		film.vote = vote;
+	setVoteHandler(film: Film, vote: number) {
+		film.votes.push(vote);
 		this.filmService.editFilm(film).subscribe(response => console.log(response))
 	}
 

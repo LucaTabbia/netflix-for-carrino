@@ -14,7 +14,7 @@
           <h4>{{film.title}}</h4>
           <p>{{film.description}}</p>
           <div class="rating">
-            <app-star-rating [vote]="film.vote" [canEdit]="true" class="votes"></app-star-rating>
+            <app-star-rating [vote]="film.vote" [canEdit]="true" class="votes" (voteChanged)="setVoteHandler(film, $event)"></app-star-rating>
           </div>
           <div class="film-buttons">
             <fa-icon [icon]="film.isFavorite?faHeart:faHeartEmpty" (click)="addToFavorites(film.id); $event.stopPropagation()" size="2x" class="heart"></fa-icon>

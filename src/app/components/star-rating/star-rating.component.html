@@ -1,1 +1,11 @@
-<fa-icon [icon]="icon" *ngFor="let icon of icons; index as i" (click)="setVote(i + 1, $event)" [class.hover]="canEdit"></fa-icon>
+<div class="stars-container">
+    <div class="vote-container">
+        <fa-icon [icon]="icon" *ngFor="let icon of icons; index as i" (click)="setVote(i + 1, $event)" [class.hover]="canEdit"></fa-icon>
+    </div>
+    <div class="choice-container">
+        <fa-icon [icon]="faStarHalf" (click)="setFinalVote(1, $event)" [class.hover]="canEdit" class="choise"></fa-icon>
+        <p class="separator">/</p>
+        <fa-icon [icon]="faStar" (click)="setFinalVote(2, $event)" [class.hover]="canEdit" class="choise"></fa-icon>
+    </div>
+</div>
+

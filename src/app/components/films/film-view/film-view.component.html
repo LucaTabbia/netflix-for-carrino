@@ -22,10 +22,10 @@
                 {{film.duration}}
             </div>
             <div *ngIf="film.vote != undefined" class="rating">
-                <app-star-rating [vote]="film.vote" [canEdit]="true" class="votes"></app-star-rating>
+                <app-star-rating [vote]="film.vote" [canEdit]="true" class="votes" (voteChanged)="setVoteHandler(film, $event)"></app-star-rating>
             </div>
             <div *ngIf="film.vote == undefined" class="rating">
-                <app-star-rating [vote]="0" [canEdit]="true" class="votes"></app-star-rating>
+                <app-star-rating [vote]="0" [canEdit]="true" class="votes" (voteChanged)="setVoteHandler(film, $event)"></app-star-rating>
             </div>
         </div>
         <div class="icons">

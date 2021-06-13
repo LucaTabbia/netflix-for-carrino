@@ -34,10 +34,10 @@ export class ActorFilmListComponent implements OnInit {
 
 
   //add a vote to the film
-  newVote(value: any, film: Film){
-    film.votes.push(value);
-    this.filmService.editFilm(film)
-  }
+	setVoteHandler(film: Film, vote: number) {
+		film.votes.push(vote);
+		this.filmService.editFilm(film).subscribe(response => console.log(response))
+	}
 
 
   //get the list of films
