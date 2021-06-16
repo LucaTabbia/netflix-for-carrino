@@ -8,6 +8,8 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+
+  public isCollapsed = true;
   @Input() userId: number= 0;
   userImg= "https://pbs.twimg.com/profile_images/740272510420258817/sd2e6kJy_400x400.jpg";
 

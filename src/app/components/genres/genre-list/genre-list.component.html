@@ -3,7 +3,7 @@
     <fa-icon [icon]="faPlus" class="plus" size="2x" [routerLink]="['/genres/add-genre']"></fa-icon>
   </div>
     <div class="row">
-      <div class="card col-3 genre-container" *ngFor="let genre of genres" style="margin-bottom: 10px">
+      <div class="card col-12 col-sm-6 col-xl-3 genre-container" *ngFor="let genre of genres" style="margin-bottom: 10px">
         <img src="{{genre.image_url}}" class="card-img-top" alt="" style="height: 60%;">
         <h3>{{genre.name}}</h3>
         <p>{{genre.films}}</p>

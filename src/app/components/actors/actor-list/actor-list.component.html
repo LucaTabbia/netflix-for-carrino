@@ -3,7 +3,7 @@
     <fa-icon [icon]="faPlus" class="plus" size="2x" [routerLink]="['/actors/add-actor']"></fa-icon>
   </div>
     <div class="row">
-      <div class="card col-3 actor-container" *ngFor="let actor of actors" style="margin-bottom: 10px">
+      <div class="card col-12 col-sm-6 col-xl-3 actor-container" *ngFor="let actor of actors" style="margin-bottom: 10px">
         <img src="{{actor.photo_url}}" class="card-img-top" alt="" style="height: 60%;">
         <h3>{{actor.firstname}}{{actor.lastname}}</h3>
         <h5>{{actor.birthdate}}</h5>

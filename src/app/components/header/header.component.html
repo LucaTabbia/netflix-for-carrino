@@ -1,30 +1,29 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark header-navbar">
-    <a class="navbar-brand" href="#">Netflix</a>
-	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="#" (click)="collapse.toggle()">Netflix</a>
+	<button class="navbar-toggler" type="button" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
 		<span class="navbar-toggler-icon"></span>
 	</button>
-	<div class="d-flex collapse navbar-collapse" id="navbarSupportedContent">
-		<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+	<div class=" collapse navbar-collapse" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+		<ul class="navbar-nav me-auto mb-2 mb-lg-0 ul-nav">
 			<li class="nav-item">
-				<a class="nav-link active" aria-current="page" routerLink="dashboard">Home</a>
+				<a class="nav-link active" (click)="collapse.toggle()" aria-current="page" routerLink="dashboard">Home</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" routerLink="films/film-list">Films</a>
+				<a class="nav-link" (click)="collapse.toggle()" routerLink="films/film-list">Films</a>
     		</li>
 			<li class="nav-item">
-				<a class="nav-link" routerLink="genres/genre-list">Genres</a>
+				<a class="nav-link" (click)="collapse.toggle()" routerLink="genres/genre-list">Genres</a>
     		</li>
 			<li class="nav-item">
-				<a class="nav-link" routerLink="actors/actor-list">Actors</a>
+				<a class="nav-link" (click)="collapse.toggle()" routerLink="actors/actor-list">Actors</a>
     		</li>
 			<div class="user-info">
-				<div class="user-img" [routerLink]="['/user-edit']" [ngStyle]="{ 'background-image': 'url(' + userImg + ')'}">
-				</div>
+				<div class="user-img" (click)="collapse.toggle()" [routerLink]="['/user-edit']" [ngStyle]="{ 'background-image': 'url(' + userImg + ')'}"></div>
 				<li class="nav-item log-button" *ngIf="userId != 0">
-					  <button class="btn btn-outline-light" (click)= 'logOut()'>Log Out</button>
+					  <button class="btn btn-outline-light" (click)= 'logOut(); collapse.toggle()'>Log Out</button>
 				</li>
 				<li class="nav-item log-button" *ngIf="userId == 0">
-					<button class="btn btn-outline-light" [routerLink]="['/login']">Login</button>
+					<button class="btn btn-outline-light" (click)="collapse.toggle()" [routerLink]="['/login']">Login</button>
 				</li>
 			</div>
 		</ul>

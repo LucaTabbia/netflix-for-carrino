@@ -6,6 +6,8 @@
     background-position: top;
     background-repeat: no-repeat;
     background-color: ghostwhite;
+    background-size: contain;
+    height: 100%;
 }
 .film-info{
     display: flex;
@@ -21,7 +23,7 @@
 .icons{
     display: flex;
     justify-content: space-around;
-    margin-bottom: 2%;
+    padding-bottom: 2%;
 }
 .info-top-row{
     padding: 2%;
@@ -74,4 +76,8 @@
     width: 20%;
     margin: 1px 5px;
     white-space: nowrap;
+}
+.actors-genres-title{
+    color: white;
+    text-shadow: 1px 1px black;
 }

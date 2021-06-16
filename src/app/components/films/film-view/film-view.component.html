@@ -4,12 +4,13 @@
             <div class="info-top-row">
                 <h4>{{film.title}}</h4>
                 <p>{{film.release_year}}</p>
-                <p> vote: {{film.vote}}</p>
                 <p>Directed by: {{film.director}}</p>
             </div>
+            <h3 class="actors-genres-title">Actors:</h3>
             <div class="info-bottom-row row buttons-to-select">
                 <button *ngFor="let actor of film.actors"class="btn btn-light button-to-select" name="see-actor" [routerLink]="['/actors/actor-film-list/', actor.id]">{{actor.firstname}} {{actor.lastname}}</button>
             </div>
+            <h3 class="actors-genres-title">Genres:</h3>
             <div class="info-bottom-row row buttons-to-select">
                 <button *ngFor="let genre of film.genres"class="btn btn-light button-to-select" name="see-genre" [routerLink]="['/genres/genre-film-list/', genre.id]">{{genre.name}}</button>
             </div>
@@ -23,9 +24,6 @@
             </div>
             <div *ngIf="film.vote != undefined" class="rating">
                 <app-star-rating [vote]="film.vote" [canEdit]="true" class="votes" (voteChanged)="setVoteHandler(film, $event)"></app-star-rating>
-            </div>
-            <div *ngIf="film.vote == undefined" class="rating">
-                <app-star-rating [vote]="0" [canEdit]="true" class="votes" (voteChanged)="setVoteHandler(film, $event)"></app-star-rating>
             </div>
         </div>
         <div class="icons">

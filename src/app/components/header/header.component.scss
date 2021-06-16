@@ -18,3 +18,18 @@
 .log-button{
     padding-left: 10px;
 }
+
+@media screen and (max-width: 992px) {
+    .user-info{
+        position: static;
+        align-items: center;
+        width: 100%;
+        justify-content: space-between;
+    }
+    .ul-nav{
+        width: 100%;
+    }
+    .header-navbar{
+        height: auto;
+    }
+}

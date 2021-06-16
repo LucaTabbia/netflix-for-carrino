@@ -7,7 +7,7 @@
       <button class="btn btn-outline-success search-button" type="submit" (click)="search()">Search</button>
     </form>
       <div class="row">
-        <div class="card col-3 film-container" *ngFor="let film of films" [routerLink]="['/films/film-view/', film.id]">
+        <div class="card col-12 col-sm-6 col-xl-3 film-container" *ngFor="let film of films" [routerLink]="['/films/film-view/', film.id]">
           <div class="card-img-top" style="height: 60%;">
             <img src="{{film.cover_url}}" alt="" class="img-film">
           </div>

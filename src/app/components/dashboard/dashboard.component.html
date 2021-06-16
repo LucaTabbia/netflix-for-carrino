@@ -1,7 +1,7 @@
 <div class="container-personal" style="width: 100%; margin-top: 30px;">
   <h3 class="dashboard-titles">Our last films added:</h3>
     <div class="row">
-      <div class="card col-3 film-container" *ngFor="let film of lastFilms" [routerLink]="['/films/film-view/', film.id]">
+      <div class="card col-12 col-sm-6 col-xl-3 film-container" *ngFor="let film of lastFilms" [routerLink]="['/films/film-view/', film.id]">
         <div class="card-img-top" style="height: 60%;">
           <img src="{{film.cover_url}}" alt="" class="img-film">
         </div>
@@ -18,7 +18,7 @@
     </div>
     <h3 class="dashboard-titles">Out best films:</h3>
     <div class="row">
-        <div class="card col-3 film-container" *ngFor="let film of bestFilms" [routerLink]="['/films/film-view/', film.id]">
+        <div class="card col-12 col-sm-6 col-xl-3 film-container" *ngFor="let film of bestFilms" [routerLink]="['/films/film-view/', film.id]">
           <div class="card-img-top" style="height: 60%;">
             <img src="{{film.cover_url}}" alt="" class="img-film">
           </div>

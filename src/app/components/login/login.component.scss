@@ -10,6 +10,21 @@
     justify-content: space-around;
     align-items: center;
 }
+.form-control{
+    width: 50%;
+}
 .remember-me-check{
     margin-left: 20px;
+}
+@media screen and (max-width:690px){
+    .button-to-select{
+        width: 100%;
+    }
+    .form-control{
+        width: 100%;
+        position: static;
+    }
+    .icons-container{
+        width: 100vw;
+    }
 }

@@ -69,9 +69,7 @@ export class UserService {
       'Authorization': this.loggedUser ? this.loggedUser.token : ''
     })}
     return this.http.post<any>(this.addFilmUrl,{ids: id}, httpOptions)
-    .pipe(tap(response=> {
-      console.log(response)
-    }),
+    .pipe(tap(response=> {}),
     catchError(error=>{
       this.loggedUser = null;
       console.log(error)
@@ -87,7 +85,6 @@ export class UserService {
     })}
     return this.http.post<any>(this.addGenreUrl,{ids: id}, httpOptions)
     .pipe(tap(response=> {
-      this.loggedUser = response;
     }),
     catchError(error=>{
       this.loggedUser = null;
@@ -103,7 +100,6 @@ export class UserService {
     })}
     return this.http.post<any>(this.addActorUrl,{ids: id}, httpOptions)
     .pipe(tap(response=> {
-      this.loggedUser = response;
     }),
     catchError(error=>{
       this.loggedUser = null;
