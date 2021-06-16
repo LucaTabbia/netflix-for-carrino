@@ -81,3 +81,29 @@
     color: white;
     text-shadow: 1px 1px black;
 }
+
+@media screen and (min-width:690px) and (max-width: 999px){
+    .button-to-select{
+        width: 30%;
+    }
+    .main-content{
+        width: 100vw;
+    }
+    .plot{
+        width: 96%;
+        margin-left: 2%;
+    }
+
+}
+@media screen and (max-width:690px){
+    .button-to-select{
+        width: 100%;
+    }
+    .main-content{
+        width: 100vw;
+    }
+    .plot{
+        width: 96%;
+        margin-left: 2%;
+    }
+}
